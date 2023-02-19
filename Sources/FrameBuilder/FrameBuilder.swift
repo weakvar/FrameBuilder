@@ -133,91 +133,51 @@ public class FrameBuilder {
         return self
     }
     
-    /// Sets the leading edge of the view to the leading edge of another view with an offset.
+    /// Sets the leading edge of the view equal to the given edge of another view.
     ///
     /// - Parameters:
-    ///   - view: The other view whose leading edge is to be used.
-    ///   - offset: The offset to be added to the leading edge of the other view.
-    /// - Returns: `FrameBuilder` instance with the `leadingToLeading` attribute.
-    public func leadingToLeading(ofView view: UIView, offset: CGFloat = 0) -> Self {
-        attributes.append(.leadingToLeading(ofView: view, offset: offset))
+    ///   - edge: The edge of the other view to set the leading edge equal to.
+    ///   - view: The view to set the leading edge equal to.
+    ///   - offset: The offset from the other view's edge to set the leading edge.
+    /// - Returns: A `FrameBuilder` instance with the `leading` attribute.
+    public func leadingEqualTo(_ edge: LayoutXAxis, ofView view: UIView, offset: CGFloat = 0) -> Self {
+        attributes.append(.leadingEqualTo(edge, ofView: view, offset: offset))
         return self
     }
     
-    /// Sets the leading edge of the view to the trailing edge of another view with an offset.
+    /// Sets the trailing edge of the view equal to the given edge of another view.
     ///
     /// - Parameters:
-    ///   - view: The other view whose trailing edge is to be used.
-    ///   - offset: The offset to be added to the trailing edge of the other view.
-    /// - Returns: `FrameBuilder` instance with the `leadingToTrailing` attribute.
-    public func leadingToTrailing(ofView view: UIView, offset: CGFloat = 0) -> Self {
-        attributes.append(.leadingToTrailing(ofView: view, offset: offset))
+    ///   - edge: The edge of the other view to set the trailing edge equal to.
+    ///   - view: The view to set the trailing edge equal to.
+    ///   - offset: The offset from the other view's edge to set the trailing edge.
+    /// - Returns: A `FrameBuilder` instance with the `trailing` attribute.
+    public func trailingEqualTo(_ edge: LayoutXAxis, ofView view: UIView, offset: CGFloat = 0) -> Self {
+        attributes.append(.trailingEqualTo(edge, ofView: view, offset: offset))
         return self
     }
     
-    /// Sets the trailing edge of the view to the leading edge of another view with an offset.
+    /// Sets the top edge of the view equal to the specified edge of the specified view with an offset.
     ///
     /// - Parameters:
-    ///   - view: The other view whose leading edge is to be used.
-    ///   - offset: The offset to be added to the leading edge of the other view.
-    /// - Returns: `FrameBuilder` instance with the `trailingToLeading` attribute.
-    public func trailingToLeading(ofView view: UIView, offset: CGFloat = 0) -> Self {
-        attributes.append(.trailingToLeading(ofView: view, offset: offset))
+    ///   - edge: The edge of the view to which the top edge will be set equal to. Can be `.top` or `.bottom`.
+    ///   - view: The view whose edge will be used to set the top edge of the current view.
+    ///   - offset: The offset to apply between the edges of the two views.
+    /// - Returns: A `FrameBuilder` instance with the `topEqualTo` attribute.
+    public func topEqualTo(_ edge: LayoutYAxis, ofView view: UIView, offset: CGFloat = 0) -> Self {
+        attributes.append(.topEqualTo(edge, ofView: view, offset: offset))
         return self
     }
     
-    /// Sets the trailing edge of the view to the trailing edge of another view with an offset.
+    /// Sets the bottom edge of the view equal to the specified edge of the specified view with an offset.
     ///
     /// - Parameters:
-    ///   - view: The other view whose trailing edge is to be used.
-    ///   - offset: The offset to be added to the trailing edge of the other view.
-    /// - Returns: `FrameBuilder` instance with the `trailingToTrailing` attribute.
-    public func trailingToTrailing(ofView view: UIView, offset: CGFloat = 0) -> Self {
-        attributes.append(.trailingToTrailing(ofView: view, offset: offset))
-        return self
-    }
-    
-    /// Sets the top edge of the view to the top edge of another view with an offset.
-    ///
-    /// - Parameters:
-    ///   - view: The other view whose top edge is to be used.
-    ///   - offset: The offset to be added to the top edge of the other view.
-    /// - Returns: `FrameBuilder` instance with the `topToTop` attribute.
-    public func topToTop(ofView view: UIView, offset: CGFloat = 0) -> Self {
-        attributes.append(.topToTop(ofView: view, offset: offset))
-        return self
-    }
-    
-    /// Sets the top edge of the view to the bottom edge of another view with an offset.
-    ///
-    /// - Parameters:
-    ///   - view: The other view whose bottom edge is to be used.
-    ///   - offset: The offset to be added to the bottom edge of the other view.
-    /// - Returns: `FrameBuilder` instance with the `topToBottom` attribute.
-    public func topToBottom(ofView view: UIView, offset: CGFloat = 0) -> Self {
-        attributes.append(.topToBottom(ofView: view, offset: offset))
-        return self
-    }
-    
-    /// Sets the bottom edge of the view to the top edge of another view with an offset.
-    ///
-    /// - Parameters:
-    ///   - view: The other view whose top edge is to be used.
-    ///   - offset: The offset to be added to the top edge of the other view.
-    /// - Returns: `FrameBuilder` instance with the `bottomToTop` attribute.
-    public func bottomToTop(ofView view: UIView, offset: CGFloat = 0) -> Self {
-        attributes.append(.bottomToTop(ofView: view, offset: offset))
-        return self
-    }
-    
-    /// Sets the bottom edge of the view to the bottom edge of another view with an offset.
-    ///
-    /// - Parameters:
-    ///   - view: The other view whose bottom edge is to be used.
-    ///   - offset: The offset to be added to the bottom edge of the other view.
-    /// - Returns: `FrameBuilder` instance with the `bottomToBottom` attribute.
-    public func bottomToBottom(ofView view: UIView, offset: CGFloat = 0) -> Self {
-        attributes.append(.bottomToBottom(ofView: view, offset: offset))
+    ///   - edge: The edge of the view to which the bottom edge will be set equal to. Can be `.top` or `.bottom`.
+    ///   - view: The view whose edge will be used to set the bottom edge of the current view.
+    ///   - offset: The offset to apply between the edges of the two views.
+    /// - Returns: A `FrameBuilder` instance with the `bottomEqualTo` attribute.
+    public func bottomEqualTo(_ edge: LayoutYAxis, ofView view: UIView, offset: CGFloat = 0) -> Self {
+        attributes.append(.bottomEqualTo(edge, ofView: view, offset: offset))
         return self
     }
     
