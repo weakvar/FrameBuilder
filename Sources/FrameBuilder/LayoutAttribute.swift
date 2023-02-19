@@ -7,16 +7,6 @@
 
 import UIKit
 
-public enum LayoutXAxis {
-    case leading
-    case trailing
-}
-
-public enum LayoutYAxis {
-    case top
-    case bottom
-}
-
 public enum LayoutAttribute {
     case width(CGFloat)
     case height(CGFloat)
