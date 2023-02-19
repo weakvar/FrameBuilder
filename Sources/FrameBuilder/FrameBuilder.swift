@@ -67,6 +67,21 @@ public class FrameBuilder {
         return self
     }
     
+    /// Sets the width of the view relative to the leading and trailing edges of the specified views.
+    ///
+    /// - Parameters:
+    ///   - leadingView: The view to use for the leading edge of the width.
+    ///   - leadingEdge: The edge of the leading view to use for the leading edge of the width.
+    ///   - leadingOffset: The offset from the leading edge of the leading view.
+    ///   - trailingView: The view to use for the trailing edge of the width.
+    ///   - trailingEdge: The edge of the trailing view to use for the trailing edge of the width.
+    ///   - trailingOffset: The offset from the trailing edge of the trailing view.
+    /// - Returns: `FrameBuilder` instance with the `widthRelativeTo` attribute.
+    public func widthRelativeTo(leadingView: UIView, leadingEdge: LayoutXAxis, leadingOffset: CGFloat = 0, trailingView: UIView, trailingEdge: LayoutXAxis, trailingOffset: CGFloat = 0) -> Self {
+        attributes.append(.widthRelativeTo(leadingView: leadingView, leadingEdge: leadingEdge, leadingOffset: leadingOffset, trailingView: trailingView, trailingEdge: trailingEdge, trailingOffset: trailingOffset))
+        return self
+    }
+    
     /// Sets the leading edge of the view.
     ///
     /// - Parameter value: The value to be set for the leading edge.

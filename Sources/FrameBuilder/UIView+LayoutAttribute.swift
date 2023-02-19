@@ -26,6 +26,9 @@ extension UIView {
             case .height(let value):
                 applyHeight(value, to: &frame)
                 
+            case .widthRelativeTo(let leadingView, let leadingEdge, let leadingOffset, let trailingView, let trailingEdge, let trailingOffset):
+                applyWidthRelativeTo(leadingView: leadingView, leadingEdge: leadingEdge, leadingOffset: leadingOffset, trailingView: trailingView, trailingEdge: trailingEdge, trailingOffset: trailingOffset, to: &frame)
+                
             case .leading(let value):
                 applyLeading(value, to: &frame)
                 
@@ -82,6 +85,23 @@ extension UIView {
     ///   - frame: The frame to update with the new width value.
     private func applyWidth(_ value: CGFloat, to frame: inout CGRect) {
         frame.size.width = value
+    }
+    
+    /// Updates the width of the view's frame to be relative to the specified leading and trailing views and their edges.
+    ///
+    /// - Parameters:
+    ///   - leadingView: The leading `UIView` to calculate the width from.
+    ///   - leadingEdge: The edge of the leading view to use for calculating the width.
+    ///   - leadingOffset: The offset from the leading edge of the leading view to use for calculating the width.
+    ///   - trailingView: The trailing `UIView` to calculate the width from.
+    ///   - trailingEdge: The edge of the trailing view to use for calculating the width.
+    ///   - trailingOffset: The offset from the trailing edge of the trailing view to use for calculating the width.
+    ///   - frame: The frame to update with the new width value.
+    private func applyWidthRelativeTo(leadingView: UIView, leadingEdge: LayoutXAxis, leadingOffset: CGFloat, trailingView: UIView, trailingEdge: LayoutXAxis, trailingOffset: CGFloat, to frame: inout CGRect) {
+        let leadingX = leadingEdge == .leading ? leadingView.frame.minX + leadingOffset : leadingView.frame.maxX + leadingOffset
+        let trailingX = trailingEdge == .leading ? trailingView.frame.minX - trailingOffset : trailingView.frame.maxX - trailingOffset
+        frame.size.width = trailingX - leadingX
+        frame.origin.x = leadingX
     }
     
     /// Updates the height of the view's frame to the specified value.

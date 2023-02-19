@@ -7,9 +7,15 @@
 
 import UIKit
 
+public enum LayoutXAxis {
+    case leading
+    case trailing
+}
+
 public enum LayoutAttribute {
     case width(CGFloat)
     case height(CGFloat)
+    case widthRelativeTo(leadingView: UIView, leadingEdge: LayoutXAxis, leadingOffset: CGFloat, trailingView: UIView, trailingEdge: LayoutXAxis, trailingOffset: CGFloat)
     case leading(CGFloat)
     case trailing(CGFloat)
     case top(CGFloat)
