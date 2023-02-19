@@ -12,10 +12,16 @@ public enum LayoutXAxis {
     case trailing
 }
 
+public enum LayoutYAxis {
+    case top
+    case bottom
+}
+
 public enum LayoutAttribute {
     case width(CGFloat)
     case height(CGFloat)
     case widthRelativeTo(leadingView: UIView, leadingEdge: LayoutXAxis, leadingOffset: CGFloat, trailingView: UIView, trailingEdge: LayoutXAxis, trailingOffset: CGFloat)
+    case heightRelativeTo(topView: UIView, topEdge: LayoutYAxis, topOffset: CGFloat, bottomView: UIView, bottomEdge: LayoutYAxis, bottomOffset: CGFloat)
     case leading(CGFloat)
     case trailing(CGFloat)
     case top(CGFloat)

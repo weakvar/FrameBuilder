@@ -29,6 +29,9 @@ extension UIView {
             case .widthRelativeTo(let leadingView, let leadingEdge, let leadingOffset, let trailingView, let trailingEdge, let trailingOffset):
                 applyWidthRelativeTo(leadingView: leadingView, leadingEdge: leadingEdge, leadingOffset: leadingOffset, trailingView: trailingView, trailingEdge: trailingEdge, trailingOffset: trailingOffset, to: &frame)
                 
+            case .heightRelativeTo(topView: let topView, topEdge: let topEdge, topOffset: let topOffset, bottomView: let bottomView, bottomEdge: let bottomEdge, bottomOffset: let bottomOffset):
+                applyHeightRelativeTo(topView: topView, topEdge: topEdge, topOffset: topOffset, bottomView: bottomView, bottomEdge: bottomEdge, bottomOffset: bottomOffset, to: &frame)
+                
             case .leading(let value):
                 applyLeading(value, to: &frame)
                 
@@ -87,6 +90,15 @@ extension UIView {
         frame.size.width = value
     }
     
+    /// Updates the height of the view's frame to the specified value.
+    ///
+    /// - Parameters:
+    ///   - value: The new height value to set.
+    ///   - frame: The frame to update with the new height value.
+    private func applyHeight(_ value: CGFloat, to frame: inout CGRect) {
+        frame.size.height = value
+    }
+    
     /// Updates the width of the view's frame to be relative to the specified leading and trailing views and their edges.
     ///
     /// - Parameters:
@@ -104,13 +116,21 @@ extension UIView {
         frame.origin.x = leadingX
     }
     
-    /// Updates the height of the view's frame to the specified value.
+    /// Updates the height of the view's frame to be relative to the specified top and bottom views and their edges.
     ///
     /// - Parameters:
-    ///   - value: The new height value to set.
+    ///   - topView: The top `UIView` to calculate the height from.
+    ///   - topEdge: The edge of the top view to use for calculating the height.
+    ///   - topOffset: The offset from the top edge of the top view to use for calculating the height.
+    ///   - bottomView: The bottom `UIView` to calculate the height from.
+    ///   - bottomEdge: The edge of the bottom view to use for calculating the height.
+    ///   - bottomOffset: The offset from the bottom edge of the bottom view to use for calculating the height.
     ///   - frame: The frame to update with the new height value.
-    private func applyHeight(_ value: CGFloat, to frame: inout CGRect) {
-        frame.size.height = value
+    private func applyHeightRelativeTo(topView: UIView, topEdge: LayoutYAxis, topOffset: CGFloat, bottomView: UIView, bottomEdge: LayoutYAxis, bottomOffset: CGFloat, to frame: inout CGRect) {
+        let topY = topEdge == .top ? topView.frame.minY + topOffset : topView.frame.maxY + topOffset
+        let bottomY = bottomEdge == .top ? bottomView.frame.minY - bottomOffset : bottomView.frame.maxY - bottomOffset
+        frame.size.height = bottomY - topY
+        frame.origin.y = topY
     }
     
     /// Updates the leading edge (minX) of the view's frame to the specified value.

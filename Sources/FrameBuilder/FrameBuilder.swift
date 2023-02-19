@@ -82,6 +82,21 @@ public class FrameBuilder {
         return self
     }
     
+    /// Sets the height of the view relative to the specified top and bottom views and their edges.
+    ///
+    /// - Parameters:
+    ///   - topView: The top `UIView` to calculate the height from.
+    ///   - topEdge: The edge of the top view to use for calculating the height.
+    ///   - topOffset: The offset from the top edge of the top view to use for calculating the height.
+    ///   - bottomView: The bottom `UIView` to calculate the height from.
+    ///   - bottomEdge: The edge of the bottom view to use for calculating the height.
+    ///   - bottomOffset: The offset from the bottom edge of the bottom view to use for calculating the height.
+    /// - Returns: `FrameBuilder` instance with the `heightRelativeTo` attribute.
+    public func heightRelativeTo(topView: UIView, topEdge: LayoutYAxis, topOffset: CGFloat = 0, bottomView: UIView, bottomEdge: LayoutYAxis, bottomOffset: CGFloat = 0) -> Self {
+        attributes.append(.heightRelativeTo(topView: topView, topEdge: topEdge, topOffset: topOffset, bottomView: bottomView, bottomEdge: bottomEdge, bottomOffset: bottomOffset))
+        return self
+    }
+    
     /// Sets the leading edge of the view.
     ///
     /// - Parameter value: The value to be set for the leading edge.
