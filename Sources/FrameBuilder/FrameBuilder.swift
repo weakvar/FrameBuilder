@@ -7,6 +7,26 @@
 
 import UIKit
 
+/**
+ `FrameBuilder` constructs attributes for a `UIView` frame in a compact and easy-to-use way.
+ It provides a fluent interface for constructing an array of `LayoutAttribute` objects, which can then be used to set the frame of a `UIView`.
+ 
+ To use `FrameBuilder`, create a new instance of the class, and then call methods on it to add attributes to the layout.
+ Finally, call the `build()` method to create an array of `LayoutAttribute` objects, and then pass
+ that array to the `applyAttributesToFrame(_:)` method of a `UIView` to apply the layout.
+ 
+ ```swift
+ let fooView = UIView()
+ fooView.applyAttributesToFrame(
+     FrameBuilder()
+         .leadingToLeading(ofView: view, offset: 16)
+         .topToTop(ofView: view, offset: 32)
+         .width(240)
+         .height(32)
+         .build()
+ )
+ ```
+ */
 public class FrameBuilder {
     
     // MARK: - Properties
