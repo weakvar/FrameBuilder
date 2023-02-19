@@ -11,9 +11,11 @@ extension UIView {
     
     // MARK: - Public Methods
     
-    /// This method takes an array of `LayoutAttribute` objects and applies each of them to the view's frame.
+    /// This method takes an array of `LayoutAttribute` objects and applies each of them to the view's frame,
+    /// updating the frame according to the attributes provided.
+    ///
     /// - Parameter attributes: An array of `LayoutAttribute` objects.
-    public func layout(_ attributes: [LayoutAttribute]) {
+    public func applyAttributesToFrame(_ attributes: [LayoutAttribute]) {
         var frame = self.frame
         
         for layoutAttribute in attributes {
