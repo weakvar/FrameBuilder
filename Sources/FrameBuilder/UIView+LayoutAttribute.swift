@@ -26,6 +26,12 @@ extension UIView {
             case .height(let value):
                 applyHeight(value, to: &frame)
                 
+            case .widthRelativeTo(let leadingView, let leadingEdge, let leadingOffset, let trailingView, let trailingEdge, let trailingOffset):
+                applyWidthRelativeTo(leadingView: leadingView, leadingEdge: leadingEdge, leadingOffset: leadingOffset, trailingView: trailingView, trailingEdge: trailingEdge, trailingOffset: trailingOffset, to: &frame)
+                
+            case .heightRelativeTo(topView: let topView, topEdge: let topEdge, topOffset: let topOffset, bottomView: let bottomView, bottomEdge: let bottomEdge, bottomOffset: let bottomOffset):
+                applyHeightRelativeTo(topView: topView, topEdge: topEdge, topOffset: topOffset, bottomView: bottomView, bottomEdge: bottomEdge, bottomOffset: bottomOffset, to: &frame)
+                
             case .leading(let value):
                 applyLeading(value, to: &frame)
                 
@@ -38,29 +44,17 @@ extension UIView {
             case .bottom(let value):
                 applyBottom(value, to: &frame)
                 
-            case .leadingToLeading(ofView: let view, offset: let offset):
-                applyLeadingToLeading(ofView: view, offset: offset, to: &frame)
+            case .leadingEqualTo(let edge, ofView: let view, offset: let offset):
+                applyLeadingEqualTo(edge: edge, ofView: view, offset: offset, to: &frame)
                 
-            case .leadingToTrailing(ofView: let view, offset: let offset):
-                applyLeadingToTrailing(ofView: view, offset: offset, to: &frame)
+            case .trailingEqualTo(let edge, ofView: let view, offset: let offset):
+                applyTrailingEqualTo(edge: edge, ofView: view, offset: offset, to: &frame)
                 
-            case .trailingToLeading(ofView: let view, offset: let offset):
-                applyTrailingToLeading(ofView: view, offset: offset, to: &frame)
+            case .topEqualTo(let edge, ofView: let view, offset: let offset):
+                applyTopEqualTo(edge: edge, ofView: view, offset: offset, to: &frame)
                 
-            case .trailingToTrailing(ofView: let view, offset: let offset):
-                applyTrailingToTrailing(ofView: view, offset: offset, to: &frame)
-                
-            case .topToTop(ofView: let view, offset: let offset):
-                applyTopToTop(ofView: view, offset: offset, to: &frame)
-                
-            case .topToBottom(ofView: let view, offset: let offset):
-                applyTopToBottom(ofView: view, offset: offset, to: &frame)
-                
-            case .bottomToTop(ofView: let view, offset: let offset):
-                applyBottomToTop(ofView: view, offset: offset, to: &frame)
-                
-            case .bottomToBottom(ofView: let view, offset: let offset):
-                applyBottomToBottom(ofView: view, offset: offset, to: &frame)
+            case .bottomEqualTo(let edge, ofView: let view, offset: let offset):
+                applyBottomEqualTo(edge: edge, ofView: view, offset: offset, to: &frame)
                 
             case .centerXToCenterX(ofView: let view, offset: let offset):
                 applyCenterXToCenterX(ofView: view, offset: offset, to: &frame)
@@ -91,6 +85,40 @@ extension UIView {
     ///   - frame: The frame to update with the new height value.
     private func applyHeight(_ value: CGFloat, to frame: inout CGRect) {
         frame.size.height = value
+    }
+    
+    /// Updates the width of the view's frame to be relative to the specified leading and trailing views and their edges.
+    ///
+    /// - Parameters:
+    ///   - leadingView: The leading `UIView` to calculate the width from.
+    ///   - leadingEdge: The edge of the leading view to use for calculating the width.
+    ///   - leadingOffset: The offset from the leading edge of the leading view to use for calculating the width.
+    ///   - trailingView: The trailing `UIView` to calculate the width from.
+    ///   - trailingEdge: The edge of the trailing view to use for calculating the width.
+    ///   - trailingOffset: The offset from the trailing edge of the trailing view to use for calculating the width.
+    ///   - frame: The frame to update with the new width value.
+    private func applyWidthRelativeTo(leadingView: UIView, leadingEdge: LayoutXAxis, leadingOffset: CGFloat, trailingView: UIView, trailingEdge: LayoutXAxis, trailingOffset: CGFloat, to frame: inout CGRect) {
+        let leadingX = leadingEdge == .leading ? leadingView.frame.minX + leadingOffset : leadingView.frame.maxX + leadingOffset
+        let trailingX = trailingEdge == .leading ? trailingView.frame.minX - trailingOffset : trailingView.frame.maxX - trailingOffset
+        frame.size.width = trailingX - leadingX
+        frame.origin.x = leadingX
+    }
+    
+    /// Updates the height of the view's frame to be relative to the specified top and bottom views and their edges.
+    ///
+    /// - Parameters:
+    ///   - topView: The top `UIView` to calculate the height from.
+    ///   - topEdge: The edge of the top view to use for calculating the height.
+    ///   - topOffset: The offset from the top edge of the top view to use for calculating the height.
+    ///   - bottomView: The bottom `UIView` to calculate the height from.
+    ///   - bottomEdge: The edge of the bottom view to use for calculating the height.
+    ///   - bottomOffset: The offset from the bottom edge of the bottom view to use for calculating the height.
+    ///   - frame: The frame to update with the new height value.
+    private func applyHeightRelativeTo(topView: UIView, topEdge: LayoutYAxis, topOffset: CGFloat, bottomView: UIView, bottomEdge: LayoutYAxis, bottomOffset: CGFloat, to frame: inout CGRect) {
+        let topY = topEdge == .top ? topView.frame.minY + topOffset : topView.frame.maxY + topOffset
+        let bottomY = bottomEdge == .top ? bottomView.frame.minY - bottomOffset : bottomView.frame.maxY - bottomOffset
+        frame.size.height = bottomY - topY
+        frame.origin.y = topY
     }
     
     /// Updates the leading edge (minX) of the view's frame to the specified value.
@@ -129,116 +157,99 @@ extension UIView {
         frame.origin.y = value - frame.size.height
     }
     
-    /// Sets the view's leading edge to the leading edge of the given view with the specified offset.
+    /// Updates the view's leading edge to be equal to the specified edge of the specified view, with the given offset.
     ///
     /// - Parameters:
-    ///   - view: The view to align to.
-    ///   - offset: The offset from the leading edge of the given view.
-    ///   - frame: The frame to apply the changes to.
-    private func applyLeadingToLeading(ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
-        if self.isDescendant(of: view) {
-            frame.origin.x = view.bounds.origin.x + offset
-        } else {
-            frame.origin.x = view.frame.origin.x + offset
+    ///   - edge: The edge of the view to update to be equal to the specified view's edge.
+    ///   - view: The view to calculate the edge value from.
+    ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
+    ///   - frame: The frame to update with the new leading edge value.
+    private func applyLeadingEqualTo(edge: LayoutXAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
+        switch edge {
+        case .leading:
+            if self.isDescendant(of: view) {
+                frame.origin.x = view.bounds.origin.x + offset
+            } else {
+                frame.origin.x = view.frame.origin.x + offset
+            }
+        case .trailing:
+            if self.isDescendant(of: view) {
+                frame.origin.x = view.bounds.origin.x + view.bounds.size.width + offset
+            } else {
+                frame.origin.x = view.frame.origin.x + view.frame.size.width + offset
+            }
         }
     }
     
-    /// Sets the view's leading edge to the trailing edge of the given view with the specified offset.
+    /// Updates the view's trailing edge to be equal to the specified edge of the specified view, with the given offset.
     ///
     /// - Parameters:
-    ///   - view: The view to align to.
-    ///   - offset: The offset from the trailing edge of the given view.
-    ///   - frame: The frame to apply the changes to.
-    private func applyLeadingToTrailing(ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
-        if self.isDescendant(of: view) {
-            frame.origin.x = view.bounds.origin.x + view.bounds.size.width + offset
-        } else {
-            frame.origin.x = view.frame.origin.x + view.frame.size.width + offset
+    ///   - edge: The edge of the view to update to be equal to the specified view's edge.
+    ///   - view: The view to calculate the edge value from.
+    ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
+    ///   - frame: The frame to update with the new trailing edge value.
+    private func applyTrailingEqualTo(edge: LayoutXAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
+        switch edge {
+        case .leading:
+            if self.isDescendant(of: view) {
+                frame.origin.x = view.bounds.origin.x - frame.size.width - offset
+            } else {
+                frame.origin.x = view.frame.origin.x - frame.size.width - offset
+            }
+        case .trailing:
+            if self.isDescendant(of: view) {
+                frame.origin.x = view.bounds.origin.x + view.bounds.size.width - frame.size.width - offset
+            } else {
+                frame.origin.x = view.frame.origin.x + view.frame.size.width - frame.size.width - offset
+            }
         }
     }
     
-    /// Sets the view's trailing edge to the leading edge of the given view with the specified offset.
+    /// Updates the view's top edge to be equal to the specified edge of the specified view, with the given offset.
     ///
     /// - Parameters:
-    ///   - view: The view to align to.
-    ///   - offset: The offset from the leading edge of the given view.
-    ///   - frame: The frame to apply the changes to.
-    private func applyTrailingToLeading(ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
-        if self.isDescendant(of: view) {
-            frame.origin.x = view.bounds.origin.x - frame.size.width - offset
-        } else {
-            frame.origin.x = view.frame.origin.x - frame.size.width - offset
+    ///   - edge: The edge of the view to update to be equal to the specified view's edge.
+    ///   - view: The view to calculate the edge value from.
+    ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
+    ///   - frame: The frame to update with the new top edge value.
+    private func applyTopEqualTo(edge: LayoutYAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
+        switch edge {
+        case .top:
+            if self.isDescendant(of: view) {
+                frame.origin.y = view.bounds.origin.y + offset
+            } else {
+                frame.origin.y = view.frame.origin.y + offset
+            }
+        case .bottom:
+            if self.isDescendant(of: view) {
+                frame.origin.y = view.bounds.origin.y + view.bounds.size.height + offset
+            } else {
+                frame.origin.y = view.frame.origin.y + view.frame.size.height + offset
+            }
         }
     }
     
-    /// Sets the view's trailing edge to the trailing edge of the given view with the specified offset.
+    /// Updates the view's bottom edge to be equal to the specified edge of the specified view, with the given offset.
     ///
     /// - Parameters:
-    ///   - view: The view to align to.
-    ///   - offset: The offset from the trailing edge of the given view.
-    ///   - frame: The frame to apply the changes to.
-    private func applyTrailingToTrailing(ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
-        if self.isDescendant(of: view) {
-            frame.origin.x = view.bounds.origin.x + view.bounds.size.width - frame.size.width - offset
-        } else {
-            frame.origin.x = view.frame.origin.x + view.frame.size.width - frame.size.width - offset
-        }
-    }
-    
-    /// Sets the top of the view's frame to be aligned with the top of another view's frame, with an optional offset.
-    ///
-    /// - Parameters:
-    ///   - view: The other view to align with.
-    ///   - offset: An optional offset to apply after alignment.
-    ///   - frame: The view's frame to modify.
-    private func applyTopToTop(ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
-        if self.isDescendant(of: view) {
-            frame.origin.y = view.bounds.origin.y + offset
-        } else {
-            frame.origin.y = view.frame.origin.y + offset
-        }
-    }
-    
-    /// Sets the top of the view's frame to be aligned with the bottom of another view's frame, with an optional offset.
-    ///
-    /// - Parameters:
-    ///   - view: The other view to align with.
-    ///   - offset: An optional offset to apply after alignment.
-    ///   - frame: The view's frame to modify.
-    private func applyTopToBottom(ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
-        if self.isDescendant(of: view) {
-            frame.origin.y = view.bounds.origin.y + view.bounds.size.height + offset
-        } else {
-            frame.origin.y = view.frame.origin.y + view.frame.size.height + offset
-        }
-    }
-    
-    /// Sets the bottom of the view's frame to be aligned with the top of another view's frame, with an optional offset.
-    ///
-    /// - Parameters:
-    ///   - view: The other view to align with.
-    ///   - offset: An optional offset to apply after alignment.
-    ///   - frame: The view's frame to modify.
-    private func applyBottomToTop(ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
-        if self.isDescendant(of: view) {
-            frame.origin.y = view.bounds.origin.y - frame.size.height - offset
-        } else {
-            frame.origin.y = view.frame.origin.y - frame.size.height - offset
-        }
-    }
-    
-    
-    /// Sets the bottom of the view's frame to be aligned with the bottom of another view's frame, with an optional offset.
-    ///
-    /// - Parameters:
-    ///   - view: The other view to align with.
-    ///   - offset: An optional offset to apply after alignment.
-    ///   - frame: The view's frame to modify.
-    private func applyBottomToBottom(ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
-        if self.isDescendant(of: view) {
-            frame.origin.y = view.bounds.origin.y + view.bounds.size.height - frame.size.height - offset
-        } else {
-            frame.origin.y = view.frame.origin.y + view.frame.size.height - frame.size.height - offset
+    ///   - edge: The edge of the view to update to be equal to the specified view's edge.
+    ///   - view: The view to calculate the edge value from.
+    ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
+    ///   - frame: The frame to update with the new top edge value.
+    private func applyBottomEqualTo(edge: LayoutYAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
+        switch edge {
+        case .top:
+            if self.isDescendant(of: view) {
+                frame.origin.y = view.bounds.origin.y - frame.size.height - offset
+            } else {
+                frame.origin.y = view.frame.origin.y - frame.size.height - offset
+            }
+        case .bottom:
+            if self.isDescendant(of: view) {
+                frame.origin.y = view.bounds.origin.y + view.bounds.size.height - frame.size.height - offset
+            } else {
+                frame.origin.y = view.frame.origin.y + view.frame.size.height - frame.size.height - offset
+            }
         }
     }
     
