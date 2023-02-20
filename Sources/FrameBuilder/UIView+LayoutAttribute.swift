@@ -23,11 +23,11 @@ extension UIView {
             case .width(let value):
                 applyWidth(value, to: &frame)
                 
-            case .height(let value):
-                applyHeight(value, to: &frame)
-                
             case .widthRelativeTo(let leadingView, let leadingEdge, let leadingOffset, let trailingView, let trailingEdge, let trailingOffset):
                 applyWidthRelativeTo(leadingView: leadingView, leadingEdge: leadingEdge, leadingOffset: leadingOffset, trailingView: trailingView, trailingEdge: trailingEdge, trailingOffset: trailingOffset, to: &frame)
+                
+            case .height(let value):
+                applyHeight(value, to: &frame)
                 
             case .heightRelativeTo(topView: let topView, topEdge: let topEdge, topOffset: let topOffset, bottomView: let bottomView, bottomEdge: let bottomEdge, bottomOffset: let bottomOffset):
                 applyHeightRelativeTo(topView: topView, topEdge: topEdge, topOffset: topOffset, bottomView: bottomView, bottomEdge: bottomEdge, bottomOffset: bottomOffset, to: &frame)
@@ -35,23 +35,23 @@ extension UIView {
             case .leading(let value):
                 applyLeading(value, to: &frame)
                 
-            case .trailing(let value):
-                applyTrailing(value, to: &frame)
-                
-            case .top(let value):
-                applyTop(value, to: &frame)
-                
-            case .bottom(let value):
-                applyBottom(value, to: &frame)
-                
             case .leadingEqualTo(let edge, ofView: let view, offset: let offset):
                 applyLeadingEqualTo(edge: edge, ofView: view, offset: offset, to: &frame)
+                
+            case .trailing(let value):
+                applyTrailing(value, to: &frame)
                 
             case .trailingEqualTo(let edge, ofView: let view, offset: let offset):
                 applyTrailingEqualTo(edge: edge, ofView: view, offset: offset, to: &frame)
                 
+            case .top(let value):
+                applyTop(value, to: &frame)
+                
             case .topEqualTo(let edge, ofView: let view, offset: let offset):
                 applyTopEqualTo(edge: edge, ofView: view, offset: offset, to: &frame)
+                
+            case .bottom(let value):
+                applyBottom(value, to: &frame)
                 
             case .bottomEqualTo(let edge, ofView: let view, offset: let offset):
                 applyBottomEqualTo(edge: edge, ofView: view, offset: offset, to: &frame)
@@ -78,15 +78,6 @@ extension UIView {
         frame.size.width = value
     }
     
-    /// Updates the height of the view's frame to the specified value.
-    ///
-    /// - Parameters:
-    ///   - value: The new height value to set.
-    ///   - frame: The frame to update with the new height value.
-    private func applyHeight(_ value: CGFloat, to frame: inout CGRect) {
-        frame.size.height = value
-    }
-    
     /// Updates the width of the view's frame to be relative to the specified leading and trailing views and their edges.
     ///
     /// - Parameters:
@@ -102,6 +93,15 @@ extension UIView {
         let trailingX = trailingEdge == .leading ? trailingView.frame.minX - trailingOffset : trailingView.frame.maxX - trailingOffset
         frame.size.width = trailingX - leadingX
         frame.origin.x = leadingX
+    }
+    
+    /// Updates the height of the view's frame to the specified value.
+    ///
+    /// - Parameters:
+    ///   - value: The new height value to set.
+    ///   - frame: The frame to update with the new height value.
+    private func applyHeight(_ value: CGFloat, to frame: inout CGRect) {
+        frame.size.height = value
     }
     
     /// Updates the height of the view's frame to be relative to the specified top and bottom views and their edges.
@@ -130,33 +130,6 @@ extension UIView {
         frame.origin.x = value
     }
     
-    /// Updates the trailing edge (maxX) of the view's frame to the specified value.
-    ///
-    /// - Parameters:
-    ///   - value: The new trailing edge value to set.
-    ///   - frame: The frame to update with the new trailing edge value.
-    private func applyTrailing(_ value: CGFloat, to frame: inout CGRect) {
-        frame.origin.x = value - frame.size.width
-    }
-    
-    /// Updates the top edge (minY) of the view's frame to the specified value.
-    ///
-    /// - Parameters:
-    ///   - value: The new top edge value to set.
-    ///   - frame: The frame to update with the new top edge value.
-    private func applyTop(_ value: CGFloat, to frame: inout CGRect) {
-        frame.origin.y = value
-    }
-    
-    /// Updates the bottom edge (maxY) of the view's frame to the specified value.
-    ///
-    /// - Parameters:
-    ///   - value: The new bottom edge value to set.
-    ///   - frame: The frame to update with the new bottom edge value.
-    private func applyBottom(_ value: CGFloat, to frame: inout CGRect) {
-        frame.origin.y = value - frame.size.height
-    }
-    
     /// Updates the view's leading edge to be equal to the specified edge of the specified view, with the given offset.
     ///
     /// - Parameters:
@@ -179,6 +152,15 @@ extension UIView {
                 frame.origin.x = view.frame.origin.x + view.frame.size.width + offset
             }
         }
+    }
+    
+    /// Updates the trailing edge (maxX) of the view's frame to the specified value.
+    ///
+    /// - Parameters:
+    ///   - value: The new trailing edge value to set.
+    ///   - frame: The frame to update with the new trailing edge value.
+    private func applyTrailing(_ value: CGFloat, to frame: inout CGRect) {
+        frame.origin.x = value - frame.size.width
     }
     
     /// Updates the view's trailing edge to be equal to the specified edge of the specified view, with the given offset.
@@ -205,6 +187,15 @@ extension UIView {
         }
     }
     
+    /// Updates the top edge (minY) of the view's frame to the specified value.
+    ///
+    /// - Parameters:
+    ///   - value: The new top edge value to set.
+    ///   - frame: The frame to update with the new top edge value.
+    private func applyTop(_ value: CGFloat, to frame: inout CGRect) {
+        frame.origin.y = value
+    }
+    
     /// Updates the view's top edge to be equal to the specified edge of the specified view, with the given offset.
     ///
     /// - Parameters:
@@ -227,6 +218,15 @@ extension UIView {
                 frame.origin.y = view.frame.origin.y + view.frame.size.height + offset
             }
         }
+    }
+    
+    /// Updates the bottom edge (maxY) of the view's frame to the specified value.
+    ///
+    /// - Parameters:
+    ///   - value: The new bottom edge value to set.
+    ///   - frame: The frame to update with the new bottom edge value.
+    private func applyBottom(_ value: CGFloat, to frame: inout CGRect) {
+        frame.origin.y = value - frame.size.height
     }
     
     /// Updates the view's bottom edge to be equal to the specified edge of the specified view, with the given offset.
