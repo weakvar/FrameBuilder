@@ -27,7 +27,7 @@ import UIKit
  )
  ```
  */
-public class FrameBuilder {
+public final class FrameBuilder {
     
     // MARK: - Properties
     
