@@ -58,15 +58,6 @@ public class FrameBuilder {
         return self
     }
     
-    /// Sets the height of the view.
-    ///
-    /// - Parameter value: The height value to be set.
-    /// - Returns: `FrameBuilder` instance with the `height` attribute.
-    @discardableResult public func height(_ value: CGFloat) -> Self {
-        attributes.append(.height(value))
-        return self
-    }
-    
     /// Sets the width of the view relative to the leading and trailing edges of the specified views.
     ///
     /// - Parameters:
@@ -77,8 +68,17 @@ public class FrameBuilder {
     ///   - trailingEdge: The edge of the trailing view to use for the trailing edge of the width.
     ///   - trailingOffset: The offset from the trailing edge of the trailing view.
     /// - Returns: `FrameBuilder` instance with the `widthRelativeTo` attribute.
-    @discardableResult public func widthRelativeTo(leadingView: UIView, leadingEdge: LayoutXAxis, leadingOffset: CGFloat = 0, trailingView: UIView, trailingEdge: LayoutXAxis, trailingOffset: CGFloat = 0) -> Self {
+    @discardableResult public func width(from leadingEdge: LayoutXAxis, ofView leadingView: UIView, withOffset leadingOffset: CGFloat = 0, to trailingEdge: LayoutXAxis, ofView trailingView: UIView, withOffset trailingOffset: CGFloat = 0) -> Self {
         attributes.append(.widthRelativeTo(leadingView: leadingView, leadingEdge: leadingEdge, leadingOffset: leadingOffset, trailingView: trailingView, trailingEdge: trailingEdge, trailingOffset: trailingOffset))
+        return self
+    }
+    
+    /// Sets the height of the view.
+    ///
+    /// - Parameter value: The height value to be set.
+    /// - Returns: `FrameBuilder` instance with the `height` attribute.
+    @discardableResult public func height(_ value: CGFloat) -> Self {
+        attributes.append(.height(value))
         return self
     }
     
@@ -92,7 +92,7 @@ public class FrameBuilder {
     ///   - bottomEdge: The edge of the bottom view to use for calculating the height.
     ///   - bottomOffset: The offset from the bottom edge of the bottom view to use for calculating the height.
     /// - Returns: `FrameBuilder` instance with the `heightRelativeTo` attribute.
-    @discardableResult public func heightRelativeTo(topView: UIView, topEdge: LayoutYAxis, topOffset: CGFloat = 0, bottomView: UIView, bottomEdge: LayoutYAxis, bottomOffset: CGFloat = 0) -> Self {
+    @discardableResult public func height(from topEdge: LayoutYAxis, ofView topView: UIView, withOffset topOffset: CGFloat = 0, to bottomEdge: LayoutYAxis, ofView bottomView: UIView, withOffset bottomOffset: CGFloat = 0) -> Self {
         attributes.append(.heightRelativeTo(topView: topView, topEdge: topEdge, topOffset: topOffset, bottomView: bottomView, bottomEdge: bottomEdge, bottomOffset: bottomOffset))
         return self
     }

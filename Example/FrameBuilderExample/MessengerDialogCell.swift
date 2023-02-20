@@ -89,7 +89,7 @@ final class MessengerDialogCell: UITableViewCell {
         
         nameLabel.applyAttributesToFrame(
             FrameBuilder()
-                .widthRelativeTo(leadingView: avatarImageView, leadingEdge: .trailing, leadingOffset: 12, trailingView: lastMessageTimeLabel, trailingEdge: .leading, trailingOffset: 8)
+                .width(from: .trailing, ofView: avatarImageView, withOffset: 12, to: .leading, ofView: lastMessageTimeLabel)
                 .height(18)
                 .top(equalTo: .top, ofView: contentView, withOffset: 16)
                 .leading(equalTo: .trailing, ofView: avatarImageView, withOffset: 12)
@@ -98,7 +98,7 @@ final class MessengerDialogCell: UITableViewCell {
         
         lastMessageLabel.applyAttributesToFrame(
             FrameBuilder()
-                .widthRelativeTo(leadingView: avatarImageView, leadingEdge: .trailing, leadingOffset: 12, trailingView: lastMessageTimeLabel, trailingEdge: .trailing)
+                .width(from: .trailing, ofView: avatarImageView, withOffset: 12, to: .trailing, ofView: contentView, withOffset: 12)
                 .height(20)
                 .top(equalTo: .bottom, ofView: nameLabel, withOffset: 2)
                 .leading(equalTo: .trailing, ofView: avatarImageView, withOffset: 12)
