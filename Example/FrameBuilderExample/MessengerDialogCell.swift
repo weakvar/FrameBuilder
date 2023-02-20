@@ -74,7 +74,7 @@ final class MessengerDialogCell: UITableViewCell {
                 .width(48)
                 .height(48)
                 .centerYToCenterY(ofView: contentView)
-                .leadingEqualTo(.leading, ofView: contentView, offset: 12)
+                .leading(equalTo: .leading, ofView: contentView, withOffset: 12)
                 .build()
         )
         
@@ -82,26 +82,26 @@ final class MessengerDialogCell: UITableViewCell {
             FrameBuilder()
                 .width(72)
                 .height(18)
-                .topEqualTo(.top, ofView: contentView, offset: 16)
-                .trailingEqualTo(.trailing, ofView: contentView, offset: 12)
+                .top(equalTo: .top, ofView: contentView, withOffset: 16)
+                .trailing(equalTo: .trailing, ofView: contentView, withOffset: 12)
                 .build()
         )
         
         nameLabel.applyAttributesToFrame(
             FrameBuilder()
-                .widthRelativeTo(leadingView: avatarImageView, leadingEdge: .trailing, leadingOffset: 12, trailingView: lastMessageTimeLabel, trailingEdge: .leading, trailingOffset: 8)
+                .width(from: .trailing, ofView: avatarImageView, withOffset: 12, to: .leading, ofView: lastMessageTimeLabel)
                 .height(18)
-                .topEqualTo(.top, ofView: contentView, offset: 16)
-                .leadingEqualTo(.trailing, ofView: avatarImageView, offset: 12)
+                .top(equalTo: .top, ofView: contentView, withOffset: 16)
+                .leading(equalTo: .trailing, ofView: avatarImageView, withOffset: 12)
                 .build()
         )
         
         lastMessageLabel.applyAttributesToFrame(
             FrameBuilder()
-                .widthRelativeTo(leadingView: avatarImageView, leadingEdge: .trailing, leadingOffset: 12, trailingView: lastMessageTimeLabel, trailingEdge: .trailing)
+                .width(from: .trailing, ofView: avatarImageView, withOffset: 12, to: .trailing, ofView: contentView, withOffset: 12)
                 .height(20)
-                .topEqualTo(.bottom, ofView: nameLabel, offset: 2)
-                .leadingEqualTo(.trailing, ofView: avatarImageView, offset: 12)
+                .top(equalTo: .bottom, ofView: nameLabel, withOffset: 2)
+                .leading(equalTo: .trailing, ofView: avatarImageView, withOffset: 12)
                 .build()
         )
         
