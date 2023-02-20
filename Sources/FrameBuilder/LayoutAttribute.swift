@@ -10,8 +10,10 @@ import UIKit
 public enum LayoutAttribute {
     case width(CGFloat)
     case widthRelativeTo(leadingView: UIView, leadingEdge: LayoutXAxis, leadingOffset: CGFloat, trailingView: UIView, trailingEdge: LayoutXAxis, trailingOffset: CGFloat)
+    case widthEqualTo(view: UIView)
     case height(CGFloat)
     case heightRelativeTo(topView: UIView, topEdge: LayoutYAxis, topOffset: CGFloat, bottomView: UIView, bottomEdge: LayoutYAxis, bottomOffset: CGFloat)
+    case heightEqualTo(view: UIView)
     case leading(CGFloat)
     case leadingEqualTo(_ edge: LayoutXAxis, ofView: UIView, offset: CGFloat)
     case trailing(CGFloat)

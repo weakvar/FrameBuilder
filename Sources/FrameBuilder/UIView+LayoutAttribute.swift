@@ -26,11 +26,17 @@ extension UIView {
             case .widthRelativeTo(let leadingView, let leadingEdge, let leadingOffset, let trailingView, let trailingEdge, let trailingOffset):
                 applyWidthRelativeTo(leadingView: leadingView, leadingEdge: leadingEdge, leadingOffset: leadingOffset, trailingView: trailingView, trailingEdge: trailingEdge, trailingOffset: trailingOffset, to: &frame)
                 
+            case .widthEqualTo(view: let view):
+                applyWidthEqualTo(view: view, to: &frame)
+                
             case .height(let value):
                 applyHeight(value, to: &frame)
                 
             case .heightRelativeTo(topView: let topView, topEdge: let topEdge, topOffset: let topOffset, bottomView: let bottomView, bottomEdge: let bottomEdge, bottomOffset: let bottomOffset):
                 applyHeightRelativeTo(topView: topView, topEdge: topEdge, topOffset: topOffset, bottomView: bottomView, bottomEdge: bottomEdge, bottomOffset: bottomOffset, to: &frame)
+                
+            case .heightEqualTo(view: let view):
+                applyHeightEqualTo(view: view, to: &frame)
                 
             case .leading(let value):
                 applyLeading(value, to: &frame)
@@ -95,6 +101,19 @@ extension UIView {
         frame.origin.x = leadingX
     }
     
+    /// Updates the width of the view's frame to be equal to the width of the specified view.
+    ///
+    /// - Parameters:
+    ///   - view: The `UIView` whose width is to be used for updating the view's width.
+    ///   - frame: The frame to update with the new width value.
+    private func applyWidthEqualTo(view: UIView, to frame: inout CGRect) {
+        if self.isDescendant(of: view) {
+            frame.size.width = view.bounds.size.width
+        } else {
+            frame.size.width = view.frame.size.width
+        }
+    }
+    
     /// Updates the height of the view's frame to the specified value.
     ///
     /// - Parameters:
@@ -119,6 +138,19 @@ extension UIView {
         let bottomY = bottomEdge == .top ? bottomView.frame.minY - bottomOffset : bottomView.frame.maxY - bottomOffset
         frame.size.height = bottomY - topY
         frame.origin.y = topY
+    }
+    
+    /// Updates the height of the view's frame to be equal to the height of the specified view.
+    ///
+    /// - Parameters:
+    ///   - view: The `UIView` whose height is to be used for updating the view's height.
+    ///   - frame: The frame to update with the new width value.
+    private func applyHeightEqualTo(view: UIView, to frame: inout CGRect) {
+        if self.isDescendant(of: view) {
+            frame.size.height = view.bounds.size.height
+        } else {
+            frame.size.height = view.frame.size.height
+        }
     }
     
     /// Updates the leading edge (minX) of the view's frame to the specified value.

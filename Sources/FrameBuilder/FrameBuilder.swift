@@ -52,7 +52,7 @@ public class FrameBuilder {
     /// Sets the width of the view.
     ///
     /// - Parameter value: The width value to be set.
-    /// - Returns: `FrameBuilder` instance with the `width` attribute.
+    /// - Returns: A `FrameBuilder` instance with the `width` attribute.
     @discardableResult public func width(_ value: CGFloat) -> Self {
         attributes.append(.width(value))
         return self
@@ -67,16 +67,25 @@ public class FrameBuilder {
     ///   - trailingView: The view to use for the trailing edge of the width.
     ///   - trailingEdge: The edge of the trailing view to use for the trailing edge of the width.
     ///   - trailingOffset: The offset from the trailing edge of the trailing view.
-    /// - Returns: `FrameBuilder` instance with the `widthRelativeTo` attribute.
+    /// - Returns: A `FrameBuilder` instance with the `widthRelativeTo` attribute.
     @discardableResult public func width(from leadingEdge: LayoutXAxis, ofView leadingView: UIView, withOffset leadingOffset: CGFloat = 0, to trailingEdge: LayoutXAxis, ofView trailingView: UIView, withOffset trailingOffset: CGFloat = 0) -> Self {
         attributes.append(.widthRelativeTo(leadingView: leadingView, leadingEdge: leadingEdge, leadingOffset: leadingOffset, trailingView: trailingView, trailingEdge: trailingEdge, trailingOffset: trailingOffset))
+        return self
+    }
+    
+    /// Sets the width of the view to be equal to the width of the specified view
+    ///
+    /// - Parameter view: The `UIView` whose width is to be used for setting the view's width.
+    /// - Returns: A `FrameBuilder` instance with the `widthEqualTo` attribute.
+    @discardableResult public func width(equalTo view: UIView) -> Self {
+        attributes.append(.widthEqualTo(view: view))
         return self
     }
     
     /// Sets the height of the view.
     ///
     /// - Parameter value: The height value to be set.
-    /// - Returns: `FrameBuilder` instance with the `height` attribute.
+    /// - Returns: A `FrameBuilder` instance with the `height` attribute.
     @discardableResult public func height(_ value: CGFloat) -> Self {
         attributes.append(.height(value))
         return self
@@ -91,16 +100,25 @@ public class FrameBuilder {
     ///   - bottomView: The bottom `UIView` to calculate the height from.
     ///   - bottomEdge: The edge of the bottom view to use for calculating the height.
     ///   - bottomOffset: The offset from the bottom edge of the bottom view to use for calculating the height.
-    /// - Returns: `FrameBuilder` instance with the `heightRelativeTo` attribute.
+    /// - Returns: A `FrameBuilder` instance with the `heightRelativeTo` attribute.
     @discardableResult public func height(from topEdge: LayoutYAxis, ofView topView: UIView, withOffset topOffset: CGFloat = 0, to bottomEdge: LayoutYAxis, ofView bottomView: UIView, withOffset bottomOffset: CGFloat = 0) -> Self {
         attributes.append(.heightRelativeTo(topView: topView, topEdge: topEdge, topOffset: topOffset, bottomView: bottomView, bottomEdge: bottomEdge, bottomOffset: bottomOffset))
+        return self
+    }
+    
+    /// Sets the height of the view to be equal to the height of the specified view
+    ///
+    /// - Parameter view: The `UIView` whose height is to be used for setting the view's height.
+    /// - Returns: A `FrameBuilder` instance with the `heightEqualTo` attribute.
+    @discardableResult public func height(equalTo view: UIView) -> Self {
+        attributes.append(.heightEqualTo(view: view))
         return self
     }
     
     /// Sets the leading edge of the view.
     ///
     /// - Parameter value: The value to be set for the leading edge.
-    /// - Returns: `FrameBuilder` instance with the `leading` attribute.
+    /// - Returns: A `FrameBuilder` instance with the `leading` attribute.
     @discardableResult public func leading(_ value: CGFloat) -> Self {
         attributes.append(.leading(value))
         return self
@@ -121,7 +139,7 @@ public class FrameBuilder {
     /// Sets the trailing edge of the view.
     ///
     /// - Parameter value: The value to be set for the trailing edge.
-    /// - Returns: `FrameBuilder` instance with the `trailing` attribute.
+    /// - Returns: A `FrameBuilder` instance with the `trailing` attribute.
     @discardableResult public func trailing(_ value: CGFloat) -> Self {
         attributes.append(.trailing(value))
         return self
@@ -142,7 +160,7 @@ public class FrameBuilder {
     /// Sets the top edge of the view.
     ///
     /// - Parameter value: The value to be set for the top edge.
-    /// - Returns: `FrameBuilder` instance with the `top` attribute.
+    /// - Returns: A `FrameBuilder` instance with the `top` attribute.
     @discardableResult public func top(_ value: CGFloat) -> Self {
         attributes.append(.top(value))
         return self
@@ -163,7 +181,7 @@ public class FrameBuilder {
     /// Sets the bottom edge of the view.
     ///
     /// - Parameter value: The value to be set for the bottom edge.
-    /// - Returns: `FrameBuilder` instance with the `bottom` attribute.
+    /// - Returns: A `FrameBuilder` instance with the `bottom` attribute.
     @discardableResult public func bottom(_ value: CGFloat) -> Self {
         attributes.append(.bottom(value))
         return self
@@ -186,7 +204,7 @@ public class FrameBuilder {
     /// - Parameters:
     ///   - view: The other view whose horizontal center is to be used.
     ///   - offset: The offset to be added to the horizontal center of the other view.
-    /// - Returns: `FrameBuilder` instance with the `centerXToCenterX` attribute.
+    /// - Returns: A `FrameBuilder` instance with the `centerXToCenterX` attribute.
     @discardableResult public func centerXToCenterX(ofView view: UIView, offset: CGFloat = 0) -> Self {
         attributes.append(.centerXToCenterX(ofView: view, offset: offset))
         return self
@@ -197,7 +215,7 @@ public class FrameBuilder {
     /// - Parameters:
     ///   - view: The other view whose vertical center is to be used.
     ///   - offset: The offset to be added to the vertical center of the other view.
-    /// - Returns: `FrameBuilder` instance with the `centerYToCenterY` attribute.
+    /// - Returns: A `FrameBuilder` instance with the `centerYToCenterY` attribute.
     @discardableResult public func centerYToCenterY(ofView view: UIView, offset: CGFloat = 0) -> Self {
         attributes.append(.centerYToCenterY(ofView: view, offset: offset))
         return self
