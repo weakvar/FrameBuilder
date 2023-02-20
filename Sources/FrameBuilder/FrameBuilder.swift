@@ -19,10 +19,10 @@ import UIKit
  let fooView = UIView()
  fooView.applyAttributesToFrame(
      FrameBuilder()
-         .width(72)
-         .height(18)
-         .topEqualTo(.top, ofView: contentView, offset: 16)
-         .trailingEqualTo(.trailing, ofView: contentView, offset: 12)
+         .width(48)
+         .height(48)
+         .leading(equalTo: .leading, ofView: barView, withOffset: 12)
+         .centerYToCenterY(ofView: barView)
          .build()
  )
  ```
