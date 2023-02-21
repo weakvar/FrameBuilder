@@ -1,3 +1,5 @@
+<image width="128" height="128" src="https://raw.githubusercontent.com/weakvar/FrameBuilder/main/logo.png?token=GHSAT0AAAAAAB6AQHJVYPNEIDRXJVNX62O2Y7VH24A">
+
 # FrameBuilder
 
 FrameBuilder is a lightweight library designed for building frame-based interfaces in a simple manner inspired by AutoLayout. It provides a fluent API for constructing layout attributes and generating a frame, which can be applied to any UIView with ease. 
