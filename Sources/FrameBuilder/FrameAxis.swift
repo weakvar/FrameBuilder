@@ -9,16 +9,16 @@ import Foundation
 
 /// An enum that represents the horizontal axis of a view's frame.
 public enum FrameXAxis {
-    /// The leading edge of the view.
+    /// Represents the leading edge of the view's frame.
     case leading
-    /// The trailing edge of the view.
+    /// Represents the trailing edge of the view's frame.
     case trailing
 }
 
 /// An enum that represents the vertical axis of a view's frame.
 public enum FrameYAxis {
-    /// The top edge of the view.
+    /// Represents the top edge of the view's frame.
     case top
-    /// The bottom edge of the view.
+    /// Represents the bottom edge of the view's frame.
     case bottom
 }
