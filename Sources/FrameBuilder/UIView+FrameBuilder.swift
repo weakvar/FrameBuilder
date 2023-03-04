@@ -93,7 +93,6 @@ extension UIView {
         let leadingX = leadingEdge == .leading ? leadingView.frame.minX + leadingOffset : leadingView.frame.maxX + leadingOffset
         let trailingX = trailingEdge == .leading ? trailingView.frame.minX - trailingOffset : trailingView.frame.maxX - trailingOffset
         frame.size.width = trailingX - leadingX
-        frame.origin.x = leadingX
     }
     
     /// Updates the width of the frame to be equal to the width of the specified view.
@@ -132,7 +131,6 @@ extension UIView {
         let topY = topEdge == .top ? topView.frame.minY + topOffset : topView.frame.maxY + topOffset
         let bottomY = bottomEdge == .top ? bottomView.frame.minY - bottomOffset : bottomView.frame.maxY - bottomOffset
         frame.size.height = bottomY - topY
-        frame.origin.y = topY
     }
     
     /// Updates the height of the frame to be equal to the height of the specified view.
@@ -177,15 +175,15 @@ extension UIView {
         switch edge {
         case .leading:
             if self.isDescendant(of: view) {
-                frame.origin.x = view.bounds.origin.x + offset
+                frame.origin.x = view.bounds.minX + offset
             } else {
-                frame.origin.x = view.frame.origin.x + offset
+                frame.origin.x = view.frame.minX + offset
             }
         case .trailing:
             if self.isDescendant(of: view) {
-                frame.origin.x = view.bounds.origin.x + view.bounds.size.width + offset
+                frame.origin.x = view.bounds.maxX + offset
             } else {
-                frame.origin.x = view.frame.origin.x + view.frame.size.width + offset
+                frame.origin.x = view.frame.maxX + offset
             }
         }
     }
@@ -201,15 +199,15 @@ extension UIView {
         switch edge {
         case .leading:
             if self.isDescendant(of: view) {
-                frame.origin.x = view.bounds.origin.x - frame.size.width - offset
+                frame.origin.x = view.bounds.minX - frame.size.width - offset
             } else {
-                frame.origin.x = view.frame.origin.x - frame.size.width - offset
+                frame.origin.x = view.frame.minX - frame.size.width - offset
             }
         case .trailing:
             if self.isDescendant(of: view) {
-                frame.origin.x = view.bounds.origin.x + view.bounds.size.width - frame.size.width - offset
+                frame.origin.x = view.bounds.maxX - frame.size.width - offset
             } else {
-                frame.origin.x = view.frame.origin.x + view.frame.size.width - frame.size.width - offset
+                frame.origin.x = view.frame.maxX - frame.size.width - offset
             }
         }
     }
@@ -225,15 +223,15 @@ extension UIView {
         switch edge {
         case .top:
             if self.isDescendant(of: view) {
-                frame.origin.y = view.bounds.origin.y + offset
+                frame.origin.y = view.bounds.minY + offset
             } else {
-                frame.origin.y = view.frame.origin.y + offset
+                frame.origin.y = view.frame.minY + offset
             }
         case .bottom:
             if self.isDescendant(of: view) {
-                frame.origin.y = view.bounds.origin.y + view.bounds.size.height + offset
+                frame.origin.y = view.bounds.maxY + offset
             } else {
-                frame.origin.y = view.frame.origin.y + view.frame.size.height + offset
+                frame.origin.y = view.frame.maxY + offset
             }
         }
     }
@@ -249,15 +247,15 @@ extension UIView {
         switch edge {
         case .top:
             if self.isDescendant(of: view) {
-                frame.origin.y = view.bounds.origin.y - frame.size.height - offset
+                frame.origin.y = view.bounds.minY - frame.size.height - offset
             } else {
-                frame.origin.y = view.frame.origin.y - frame.size.height - offset
+                frame.origin.y = view.frame.minY - frame.size.height - offset
             }
         case .bottom:
             if self.isDescendant(of: view) {
-                frame.origin.y = view.bounds.origin.y + view.bounds.size.height - frame.size.height - offset
+                frame.origin.y = view.bounds.maxY - frame.size.height - offset
             } else {
-                frame.origin.y = view.frame.origin.y + view.frame.size.height - frame.size.height - offset
+                frame.origin.y = view.frame.maxY - frame.size.height - offset
             }
         }
     }
@@ -270,9 +268,9 @@ extension UIView {
     ///   - frame: The frame to modify.
     private func applyCenterXToCenterX(ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
         if self.isDescendant(of: view) {
-            frame.origin.x = view.bounds.origin.x + view.bounds.size.width / 2 + offset - frame.size.width / 2
+            frame.origin.x = view.bounds.midX - (frame.size.width / 2) + offset
         } else {
-            frame.origin.x = view.frame.origin.x + view.frame.size.width / 2 + offset - frame.size.width / 2
+            frame.origin.x = view.frame.midX - (frame.size.width / 2) + offset
         }
     }
     
@@ -284,9 +282,9 @@ extension UIView {
     ///   - frame: The frame to modify.
     private func applyCenterYToCenterY(ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
         if self.isDescendant(of: view) {
-            frame.origin.y = view.bounds.origin.y + view.bounds.size.height / 2 + offset - frame.size.height / 2
+            frame.origin.y = view.bounds.midY - (frame.size.height / 2) + offset
         } else {
-            frame.origin.y = view.frame.origin.y + view.frame.size.height / 2 + offset - frame.size.height / 2
+            frame.origin.y = view.frame.midY - (frame.size.height / 2) + offset
         }
     }
     
