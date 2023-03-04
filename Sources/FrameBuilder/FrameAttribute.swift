@@ -7,14 +7,8 @@
 
 import UIKit
 
-/// `FrameAttribute` is an enum that represents different frame attributes of a view,
-/// such as its width, height, leading and trailing edges, top and bottom edges, and center X and Y positions.
-/// Each case of the enum contains the information necessary to set a particular frame attribute for a view,
-/// including values for the attribute itself as well as any related views, edges,
-/// or offsets that are needed to determine the final value.
-///
-/// The `FrameAttribute` enum is used in conjunction with the `FrameBuilder` class
-/// to define and apply layout constraints to views.
+/// The `FrameAttribute` defines a set of attributes to be applied to a view’s frame.
+/// Each attribute represents a specific property of the view’s frame, such as width, height, or position.
 public enum FrameAttribute {
     
     /// An attribute that defines a specific width.
