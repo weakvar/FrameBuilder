@@ -24,8 +24,8 @@ You can describe the position and size of the UIView in a simple human-readable 
 let fooView = UIView()
 fooView.buildFrame(
     FrameBuilder()
-        .leading(12)
-        .top(12)
+        .x(12)
+        .y(12)
         .width(48)
         .height(48)
 )
@@ -74,9 +74,9 @@ Once you have installed FrameBuilder, you can start using it in your project by 
 
 There is an [Example Project](https://github.com/weakvar/FrameBuilder/tree/main/Example/FrameBuilderExample) in the repository that demonstrates the layout of `MessengerDialogCell` on frames using FrameBuilder. If you're new to FrameBuilder, it's a great way to get started. Below are examples of using each of the methods provided by `FrameBuilder` class.
 
-### Methods for setting the width of the view
+### Methods for setting a width of the view
 
-Sets the specific width of the view:
+Sets the specific width of the `fooView`:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
@@ -85,7 +85,7 @@ fooView.buildFrame(
 )
 ```
 
-Sets the width of the view relative to the leading and trailing edges of the specified views:
+Sets the width of the `fooView` relative to the leading and trailing edges of the `barView` with some offsets:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
@@ -94,7 +94,7 @@ fooView.buildFrame(
 )
 ```
 
-Sets the width of the view equal to the width of another view:
+Sets the width of the `fooView` equal to the width of the `barView`:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
@@ -103,9 +103,9 @@ fooView.buildFrame(
 )
 ```
 
-### Methods for setting the height of the view
+### Methods for setting a height of the view
 
-Sets the specific height of the view:
+Sets the specific height of the `fooView`:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
@@ -114,7 +114,8 @@ fooView.buildFrame(
 )
 ```
 
-Sets the height of the view relative to the specified top and bottom views and their edges:
+
+Sets the height of the `fooView` relative to the top and bottom edges of the `barView` with some offsets:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
@@ -123,7 +124,7 @@ fooView.buildFrame(
 )
 ```
 
-Sets the height of the view equal to the height of another view:
+Sets the height of the `fooView` equal to the height of the `barView`:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
@@ -132,18 +133,29 @@ fooView.buildFrame(
 )
 ```
 
-### Methods for setting position of the view from the leading edge
+### Methods for setting a position of the view by an axis
 
-Sets the leading position of the view:
+Sets the x position of the view:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
     FrameBuilder()
-        .leading(12)
+        .x(12)
 )
 ```
 
-Sets the leading position of the view equal to the given edge of another view:
+Sets the y position of the view:
+```swift
+let fooView = UIView()
+fooView.buildFrame(
+    FrameBuilder()
+        .y(24)
+)
+```
+
+### Methods for setting a position of the view relative to a position of another UIVIew
+
+Sets the leading position of the `fooView` equal to the leading edge of the `barView` with the offset:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
@@ -152,18 +164,25 @@ fooView.buildFrame(
 )
 ```
 
-### Methods for setting position of the view from the trailing edge
-
-Sets the trailing position of the view:
+Sets the leading position of the `fooView` equal to the trailing edge of the `barView` with the offset:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
     FrameBuilder()
-        .trailing(12)
+        .leading(equalTo: .trailing, ofView: barView, withOffset: 12)
 )
 ```
 
-Sets the trailing position of the view equal to the given edge of another view:
+Sets the trailing position of the `fooView` equal to the leading edge of the `barView` with the offset:
+```swift
+let fooView = UIView()
+fooView.buildFrame(
+    FrameBuilder()
+        .trailing(equalTo: .leading, ofView: barView, withOffset: 12)
+)
+```
+
+Sets the trailing position of the `fooView` equal to the trailing edge of the `barView` with the offset:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
@@ -172,18 +191,16 @@ fooView.buildFrame(
 )
 ```
 
-### Methods for setting position of the view from the top edge
-
-Sets the top position of the view:
+Sets the top position of the `fooView` equal to the top edge of the `barView` with the offset:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
     FrameBuilder()
-        .top(24)
+        .top(equalTo: .top, ofView: barView, withOffset: 8)
 )
 ```
 
-Sets the top position of the view equal to the given edge of another view:
+Sets the top position of the `fooView` equal to the bottom edge of the `barView` with the offset:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
@@ -192,18 +209,16 @@ fooView.buildFrame(
 )
 ```
 
-### Methods for setting position of the view from the bottom edge
-
-Sets the bottom position of the viewL:
+Sets the bottom position of the `fooView` equal to the top edge of the `barView` with the offset:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
     FrameBuilder()
-        .bottom(24)
+        .bottom(equalTo: .top, ofView: barView, withOffset: 8)
 )
 ```
 
-Sets the bottom position of the view equal to the given edge of another view:
+Sets the bottom position of the `fooView` equal to the bottom edge of the `barView` with the offset:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
@@ -214,7 +229,7 @@ fooView.buildFrame(
 
 ### Methods for centring the view's position
 
-Sets the horizontal center of the view to the horizontal center of another view:
+Sets the horizontal center of the `fooView` to the horizontal center of the `barView`:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
@@ -223,7 +238,7 @@ fooView.buildFrame(
 )
 ```
 
-Sets the vertical center of the view to the vertical center of another view:
+Sets the vertical center of the `fooView` to the vertical center of the `barView`:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(

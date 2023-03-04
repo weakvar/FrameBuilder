@@ -29,26 +29,20 @@ public enum FrameAttribute {
     /// An attribute that defines the height of a view to be equal to the height of another view.
     case heightEqualTo(view: UIView)
     
-    /// An attribute that defines a specific leading edge position.
-    case leading(CGFloat)
+    /// An attribute that defines a specific position along the x-axis.
+    case x(CGFloat)
+    
+    /// An attribute that defines a specific position along the y-axis.
+    case y(CGFloat)
     
     /// An attribute that defines the leading edge of a view to be equal to the leading or trailing edge of another view plus an offset value.
     case leadingEqualTo(_ edge: FrameXAxis, ofView: UIView, offset: CGFloat)
     
-    /// An attribute that defines a specific trailing edge position.
-    case trailing(CGFloat)
-    
     /// An attribute that defines the trailing edge of a view to be equal to the leading or trailing edge of another view plus an offset value.
     case trailingEqualTo(_ edge: FrameXAxis, ofView: UIView, offset: CGFloat)
     
-    /// An attribute that defines a specific top edge position.
-    case top(CGFloat)
-    
     /// An attribute that defines the top edge of a view to be equal to the top or bottom edge of another view plus an offset value.
     case topEqualTo(_ edge: FrameYAxis, ofView: UIView, offset: CGFloat)
-    
-    /// An attribute that defines a specific bottom edge position.
-    case bottom(CGFloat)
     
     /// An attribute that defines the bottom edge of a view to be equal to the top or bottom edge of another view plus an offset value.
     case bottomEqualTo(_ edge: FrameYAxis, ofView: UIView, offset: CGFloat)

@@ -39,26 +39,20 @@ extension UIView {
             case .heightEqualTo(view: let view):
                 applyHeightEqualTo(view: view, to: &frame)
                 
-            case .leading(let value):
-                applyLeading(value, to: &frame)
+            case .x(let value):
+                applyX(value, to: &frame)
+                
+            case .y(let value):
+                applyY(value, to: &frame)
                 
             case .leadingEqualTo(let edge, ofView: let view, offset: let offset):
                 applyLeadingEqualTo(edge: edge, ofView: view, offset: offset, to: &frame)
                 
-            case .trailing(let value):
-                applyTrailing(value, to: &frame)
-                
             case .trailingEqualTo(let edge, ofView: let view, offset: let offset):
                 applyTrailingEqualTo(edge: edge, ofView: view, offset: offset, to: &frame)
                 
-            case .top(let value):
-                applyTop(value, to: &frame)
-                
             case .topEqualTo(let edge, ofView: let view, offset: let offset):
                 applyTopEqualTo(edge: edge, ofView: view, offset: offset, to: &frame)
-                
-            case .bottom(let value):
-                applyBottom(value, to: &frame)
                 
             case .bottomEqualTo(let edge, ofView: let view, offset: let offset):
                 applyBottomEqualTo(edge: edge, ofView: view, offset: offset, to: &frame)
@@ -154,13 +148,22 @@ extension UIView {
         }
     }
     
-    /// Updates the leading edge of the frame to the specified value.
+    /// Updates the x coordinate of the frame origin to the specified value.
     ///
     /// - Parameters:
-    ///   - value: The new leading edge value to set.
-    ///   - frame: The frame to update with the new leading edge value.
-    private func applyLeading(_ value: CGFloat, to frame: inout CGRect) {
+    ///   - value: The new x coordinate to set.
+    ///   - frame: The frame to update with the new x coordinate.
+    private func applyX(_ value: CGFloat, to frame: inout CGRect) {
         frame.origin.x = value
+    }
+    
+    /// Updates the y coordinate of the frame origin to the specified value.
+    ///
+    /// - Parameters:
+    ///   - value: The new y coordinate to set.
+    ///   - frame: The frame to update with the new y coordinate.
+    private func applyY(_ value: CGFloat, to frame: inout CGRect) {
+        frame.origin.y = value
     }
     
     /// Updates the leading edge of the frame to be equal to the specified edge of the specified view, with the given offset.
@@ -187,15 +190,6 @@ extension UIView {
         }
     }
     
-    /// Updates the trailing edge of the frame to the specified value.
-    ///
-    /// - Parameters:
-    ///   - value: The new trailing edge value to set.
-    ///   - frame: The frame to update with the new trailing edge value.
-    private func applyTrailing(_ value: CGFloat, to frame: inout CGRect) {
-        frame.origin.x = value - frame.size.width
-    }
-    
     /// Updates the trailing edge of the frame to be equal to the specified edge of the specified view, with the given offset.
     ///
     /// - Parameters:
@@ -220,15 +214,6 @@ extension UIView {
         }
     }
     
-    /// Updates the top edge of the frame to the specified value.
-    ///
-    /// - Parameters:
-    ///   - value: The new top edge value to set.
-    ///   - frame: The frame to update with the new top edge value.
-    private func applyTop(_ value: CGFloat, to frame: inout CGRect) {
-        frame.origin.y = value
-    }
-    
     /// Updates the top edge of the frame to be equal to the specified edge of the specified view, with the given offset.
     ///
     /// - Parameters:
@@ -251,15 +236,6 @@ extension UIView {
                 frame.origin.y = view.frame.origin.y + view.frame.size.height + offset
             }
         }
-    }
-    
-    /// Updates the bottom edge of the frame to the specified value.
-    ///
-    /// - Parameters:
-    ///   - value: The new bottom edge value to set.
-    ///   - frame: The frame to update with the new bottom edge value.
-    private func applyBottom(_ value: CGFloat, to frame: inout CGRect) {
-        frame.origin.y = value - frame.size.height
     }
     
     /// Updates the bottom edge of the frame to be equal to the specified edge of the specified view, with the given offset.

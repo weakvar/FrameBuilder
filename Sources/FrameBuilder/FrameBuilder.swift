@@ -105,12 +105,21 @@ public final class FrameBuilder {
         return self
     }
     
-    /// Sets the leading edge of the view.
+    /// Sets the x position of the view.
     ///
-    /// - Parameter value: The value to be set for the leading edge.
-    /// - Returns: A `FrameBuilder` instance with the `leading` attribute.
-    @discardableResult public func leading(_ value: CGFloat) -> Self {
-        attributes.append(.leading(value))
+    /// - Parameter value: The value to be set for the x position.
+    /// - Returns: A `FrameBuilder` instance with the `x` attribute.
+    @discardableResult public func x(_ value: CGFloat) -> Self {
+        attributes.append(.x(value))
+        return self
+    }
+    
+    /// Sets the y position of the view.
+    ///
+    /// - Parameter value: The value to be set for the y position.
+    /// - Returns: A `FrameBuilder` instance with the `y` attribute.
+    @discardableResult public func y(_ value: CGFloat) -> Self {
+        attributes.append(.y(value))
         return self
     }
     
@@ -126,15 +135,6 @@ public final class FrameBuilder {
         return self
     }
     
-    /// Sets the trailing edge of the view.
-    ///
-    /// - Parameter value: The value to be set for the trailing edge.
-    /// - Returns: A `FrameBuilder` instance with the `trailing` attribute.
-    @discardableResult public func trailing(_ value: CGFloat) -> Self {
-        attributes.append(.trailing(value))
-        return self
-    }
-    
     /// Sets the trailing edge of the view equal to the given edge of another view.
     ///
     /// - Parameters:
@@ -147,15 +147,6 @@ public final class FrameBuilder {
         return self
     }
     
-    /// Sets the top edge of the view.
-    ///
-    /// - Parameter value: The value to be set for the top edge.
-    /// - Returns: A `FrameBuilder` instance with the `top` attribute.
-    @discardableResult public func top(_ value: CGFloat) -> Self {
-        attributes.append(.top(value))
-        return self
-    }
-    
     /// Sets the top edge of the view equal to the specified edge of the specified view with an offset.
     ///
     /// - Parameters:
@@ -165,15 +156,6 @@ public final class FrameBuilder {
     /// - Returns: A `FrameBuilder` instance with the `topEqualTo` attribute.
     @discardableResult public func top(equalTo edge: FrameYAxis, ofView view: UIView, withOffset offset: CGFloat = 0) -> Self {
         attributes.append(.topEqualTo(edge, ofView: view, offset: offset))
-        return self
-    }
-    
-    /// Sets the bottom edge of the view.
-    ///
-    /// - Parameter value: The value to be set for the bottom edge.
-    /// - Returns: A `FrameBuilder` instance with the `bottom` attribute.
-    @discardableResult public func bottom(_ value: CGFloat) -> Self {
-        attributes.append(.bottom(value))
         return self
     }
     
