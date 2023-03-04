@@ -9,21 +9,20 @@ import UIKit
 
 /**
  `FrameBuilder` constructs attributes for a `UIView` frame in a compact and easy-to-use way.
- It provides a fluent interface for constructing an array of `LayoutAttribute` objects, which can then be used to set the frame of a `UIView`.
+ It provides a fluent interface for constructing an array of `FrameAttribute` objects, which can then be used to set the frame of a `UIView`.
  
  To use `FrameBuilder`, create a new instance of the class, and then call methods on it to add attributes to the layout.
- Finally, call the `build()` method to create an array of `LayoutAttribute` objects, and then pass
- that array to the `applyAttributesToFrame(_:)` method of a `UIView` to apply the layout.
+ Finally, call the `build()` method to create an array of `FrameAttribute` objects, and then pass
+ that array to the `buildFrame(_:)` method of a `UIView` to apply the layout.
  
  ```swift
  let fooView = UIView()
- fooView.applyAttributesToFrame(
+ fooView.buildFrame(
      FrameBuilder()
          .width(48)
          .height(48)
          .leading(equalTo: .leading, ofView: barView, withOffset: 12)
          .centerYToCenterY(ofView: barView)
-         .build()
  )
  ```
  */
@@ -31,20 +30,13 @@ public final class FrameBuilder {
     
     // MARK: - Properties
     
-    /// An array of layout attributes that define the size and position of the view being built.
-    private var attributes: [LayoutAttribute]
+    /// An array of frame attributes that define the size and position of the view being built.
+    private(set) var attributes: [FrameAttribute]
     
     // MARK: - Initializers
     
-    public init(attributes: [LayoutAttribute] = []) {
-        self.attributes = attributes
-    }
-    
-    // MARK: - Build Methods
-    
-    /// Builds and returns the final array of layout attributes.
-    public func build() -> [LayoutAttribute] {
-        return attributes
+    public init() {
+        self.attributes = []
     }
     
     // MARK: - Attribute Methods
@@ -68,7 +60,7 @@ public final class FrameBuilder {
     ///   - trailingEdge: The edge of the trailing view to use for the trailing edge of the width.
     ///   - trailingOffset: The offset from the trailing edge of the trailing view.
     /// - Returns: A `FrameBuilder` instance with the `widthRelativeTo` attribute.
-    @discardableResult public func width(from leadingEdge: LayoutXAxis, ofView leadingView: UIView, withOffset leadingOffset: CGFloat = 0, to trailingEdge: LayoutXAxis, ofView trailingView: UIView, withOffset trailingOffset: CGFloat = 0) -> Self {
+    @discardableResult public func width(from leadingEdge: FrameXAxis, ofView leadingView: UIView, withOffset leadingOffset: CGFloat = 0, to trailingEdge: FrameXAxis, ofView trailingView: UIView, withOffset trailingOffset: CGFloat = 0) -> Self {
         attributes.append(.widthRelativeTo(leadingView: leadingView, leadingEdge: leadingEdge, leadingOffset: leadingOffset, trailingView: trailingView, trailingEdge: trailingEdge, trailingOffset: trailingOffset))
         return self
     }
@@ -101,7 +93,7 @@ public final class FrameBuilder {
     ///   - bottomEdge: The edge of the bottom view to use for calculating the height.
     ///   - bottomOffset: The offset from the bottom edge of the bottom view to use for calculating the height.
     /// - Returns: A `FrameBuilder` instance with the `heightRelativeTo` attribute.
-    @discardableResult public func height(from topEdge: LayoutYAxis, ofView topView: UIView, withOffset topOffset: CGFloat = 0, to bottomEdge: LayoutYAxis, ofView bottomView: UIView, withOffset bottomOffset: CGFloat = 0) -> Self {
+    @discardableResult public func height(from topEdge: FrameYAxis, ofView topView: UIView, withOffset topOffset: CGFloat = 0, to bottomEdge: FrameYAxis, ofView bottomView: UIView, withOffset bottomOffset: CGFloat = 0) -> Self {
         attributes.append(.heightRelativeTo(topView: topView, topEdge: topEdge, topOffset: topOffset, bottomView: bottomView, bottomEdge: bottomEdge, bottomOffset: bottomOffset))
         return self
     }
@@ -131,7 +123,7 @@ public final class FrameBuilder {
     ///   - view: The view to set the leading edge equal to.
     ///   - offset: The offset from the other view's edge to set the leading edge.
     /// - Returns: A `FrameBuilder` instance with the `leading` attribute.
-    @discardableResult public func leading(equalTo edge: LayoutXAxis, ofView view: UIView, withOffset offset: CGFloat = 0) -> Self {
+    @discardableResult public func leading(equalTo edge: FrameXAxis, ofView view: UIView, withOffset offset: CGFloat = 0) -> Self {
         attributes.append(.leadingEqualTo(edge, ofView: view, offset: offset))
         return self
     }
@@ -152,7 +144,7 @@ public final class FrameBuilder {
     ///   - view: The view to set the trailing edge equal to.
     ///   - offset: The offset from the other view's edge to set the trailing edge.
     /// - Returns: A `FrameBuilder` instance with the `trailing` attribute.
-    @discardableResult public func trailing(equalTo edge: LayoutXAxis, ofView view: UIView, withOffset offset: CGFloat = 0) -> Self {
+    @discardableResult public func trailing(equalTo edge: FrameXAxis, ofView view: UIView, withOffset offset: CGFloat = 0) -> Self {
         attributes.append(.trailingEqualTo(edge, ofView: view, offset: offset))
         return self
     }
@@ -173,7 +165,7 @@ public final class FrameBuilder {
     ///   - view: The view whose edge will be used to set the top edge of the current view.
     ///   - offset: The offset to apply between the edges of the two views.
     /// - Returns: A `FrameBuilder` instance with the `topEqualTo` attribute.
-    @discardableResult public func top(equalTo edge: LayoutYAxis, ofView view: UIView, withOffset offset: CGFloat = 0) -> Self {
+    @discardableResult public func top(equalTo edge: FrameYAxis, ofView view: UIView, withOffset offset: CGFloat = 0) -> Self {
         attributes.append(.topEqualTo(edge, ofView: view, offset: offset))
         return self
     }
@@ -194,7 +186,7 @@ public final class FrameBuilder {
     ///   - view: The view whose edge will be used to set the bottom edge of the current view.
     ///   - offset: The offset to apply between the edges of the two views.
     /// - Returns: A `FrameBuilder` instance with the `bottomEqualTo` attribute.
-    @discardableResult public func bottom(equalTo edge: LayoutYAxis, ofView view: UIView, withOffset offset: CGFloat = 0) -> Self {
+    @discardableResult public func bottom(equalTo edge: FrameYAxis, ofView view: UIView, withOffset offset: CGFloat = 0) -> Self {
         attributes.append(.bottomEqualTo(edge, ofView: view, offset: offset))
         return self
     }

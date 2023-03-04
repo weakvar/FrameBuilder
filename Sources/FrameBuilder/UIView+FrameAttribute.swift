@@ -1,5 +1,5 @@
 //
-//  UIView+LayoutAttribute.swift
+//  UIView+FrameAttribute.swift
 //  
 //
 //  Created by Vladislav Kulikov on 19.02.2023.
@@ -11,15 +11,15 @@ extension UIView {
     
     // MARK: - Public Methods
     
-    /// This method takes an array of `LayoutAttribute` objects and applies each of them to the view's frame,
+    /// This method takes an array of `FrameAttribute` objects and applies each of them to the view's frame,
     /// updating the frame according to the attributes provided.
     ///
-    /// - Parameter attributes: An array of `LayoutAttribute` objects.
-    public func applyAttributesToFrame(_ attributes: [LayoutAttribute]) {
+    /// - Parameter attributes: An array of `FrameAttribute` objects.
+    public func buildFrame(_ builder: FrameBuilder) {
         var frame = self.frame
         
-        for layoutAttribute in attributes {
-            switch layoutAttribute {
+        for attribute in builder.attributes {
+            switch attribute {
             case .width(let value):
                 applyWidth(value, to: &frame)
                 
@@ -94,7 +94,7 @@ extension UIView {
     ///   - trailingEdge: The edge of the trailing view to use for calculating the width.
     ///   - trailingOffset: The offset from the trailing edge of the trailing view to use for calculating the width.
     ///   - frame: The frame to update with the new width value.
-    private func applyWidthRelativeTo(leadingView: UIView, leadingEdge: LayoutXAxis, leadingOffset: CGFloat, trailingView: UIView, trailingEdge: LayoutXAxis, trailingOffset: CGFloat, to frame: inout CGRect) {
+    private func applyWidthRelativeTo(leadingView: UIView, leadingEdge: FrameXAxis, leadingOffset: CGFloat, trailingView: UIView, trailingEdge: FrameXAxis, trailingOffset: CGFloat, to frame: inout CGRect) {
         let leadingX = leadingEdge == .leading ? leadingView.frame.minX + leadingOffset : leadingView.frame.maxX + leadingOffset
         let trailingX = trailingEdge == .leading ? trailingView.frame.minX - trailingOffset : trailingView.frame.maxX - trailingOffset
         frame.size.width = trailingX - leadingX
@@ -133,7 +133,7 @@ extension UIView {
     ///   - bottomEdge: The edge of the bottom view to use for calculating the height.
     ///   - bottomOffset: The offset from the bottom edge of the bottom view to use for calculating the height.
     ///   - frame: The frame to update with the new height value.
-    private func applyHeightRelativeTo(topView: UIView, topEdge: LayoutYAxis, topOffset: CGFloat, bottomView: UIView, bottomEdge: LayoutYAxis, bottomOffset: CGFloat, to frame: inout CGRect) {
+    private func applyHeightRelativeTo(topView: UIView, topEdge: FrameYAxis, topOffset: CGFloat, bottomView: UIView, bottomEdge: FrameYAxis, bottomOffset: CGFloat, to frame: inout CGRect) {
         let topY = topEdge == .top ? topView.frame.minY + topOffset : topView.frame.maxY + topOffset
         let bottomY = bottomEdge == .top ? bottomView.frame.minY - bottomOffset : bottomView.frame.maxY - bottomOffset
         frame.size.height = bottomY - topY
@@ -169,7 +169,7 @@ extension UIView {
     ///   - view: The view to calculate the edge value from.
     ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
     ///   - frame: The frame to update with the new leading edge value.
-    private func applyLeadingEqualTo(edge: LayoutXAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
+    private func applyLeadingEqualTo(edge: FrameXAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
         switch edge {
         case .leading:
             if self.isDescendant(of: view) {
@@ -202,7 +202,7 @@ extension UIView {
     ///   - view: The view to calculate the edge value from.
     ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
     ///   - frame: The frame to update with the new trailing edge value.
-    private func applyTrailingEqualTo(edge: LayoutXAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
+    private func applyTrailingEqualTo(edge: FrameXAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
         switch edge {
         case .leading:
             if self.isDescendant(of: view) {
@@ -235,7 +235,7 @@ extension UIView {
     ///   - view: The view to calculate the edge value from.
     ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
     ///   - frame: The frame to update with the new top edge value.
-    private func applyTopEqualTo(edge: LayoutYAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
+    private func applyTopEqualTo(edge: FrameYAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
         switch edge {
         case .top:
             if self.isDescendant(of: view) {
@@ -268,7 +268,7 @@ extension UIView {
     ///   - view: The view to calculate the edge value from.
     ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
     ///   - frame: The frame to update with the new top edge value.
-    private func applyBottomEqualTo(edge: LayoutYAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
+    private func applyBottomEqualTo(edge: FrameYAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
         switch edge {
         case .top:
             if self.isDescendant(of: view) {

@@ -69,40 +69,36 @@ final class MessengerDialogCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        avatarImageView.applyAttributesToFrame(
+        avatarImageView.buildFrame(
             FrameBuilder()
                 .width(48)
                 .height(48)
                 .centerYToCenterY(ofView: contentView)
                 .leading(equalTo: .leading, ofView: contentView, withOffset: 12)
-                .build()
         )
         
-        lastMessageTimeLabel.applyAttributesToFrame(
+        lastMessageTimeLabel.buildFrame(
             FrameBuilder()
                 .width(72)
                 .height(18)
                 .top(equalTo: .top, ofView: contentView, withOffset: 16)
                 .trailing(equalTo: .trailing, ofView: contentView, withOffset: 12)
-                .build()
         )
         
-        nameLabel.applyAttributesToFrame(
+        nameLabel.buildFrame(
             FrameBuilder()
                 .width(from: .trailing, ofView: avatarImageView, withOffset: 12, to: .leading, ofView: lastMessageTimeLabel)
                 .height(18)
                 .top(equalTo: .top, ofView: contentView, withOffset: 16)
                 .leading(equalTo: .trailing, ofView: avatarImageView, withOffset: 12)
-                .build()
         )
         
-        lastMessageLabel.applyAttributesToFrame(
+        lastMessageLabel.buildFrame(
             FrameBuilder()
                 .width(from: .trailing, ofView: avatarImageView, withOffset: 12, to: .trailing, ofView: contentView, withOffset: 12)
                 .height(20)
                 .top(equalTo: .bottom, ofView: nameLabel, withOffset: 2)
                 .leading(equalTo: .trailing, ofView: avatarImageView, withOffset: 12)
-                .build()
         )
         
     }
