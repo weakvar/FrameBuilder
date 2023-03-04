@@ -1,5 +1,5 @@
 //
-//  UIView+FrameAttribute.swift
+//  UIView+FrameBuilder.swift
 //  
 //
 //  Created by Vladislav Kulikov on 19.02.2023.
