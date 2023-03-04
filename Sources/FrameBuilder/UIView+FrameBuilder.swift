@@ -1,5 +1,5 @@
 //
-//  UIView+LayoutAttribute.swift
+//  UIView+FrameBuilder.swift
 //  
 //
 //  Created by Vladislav Kulikov on 19.02.2023.
@@ -11,15 +11,16 @@ extension UIView {
     
     // MARK: - Public Methods
     
-    /// This method takes an array of `LayoutAttribute` objects and applies each of them to the view's frame,
-    /// updating the frame according to the attributes provided.
+    /// This function applies the attributes defined in a `FrameBuilder` object to the view's frame.
+    /// It iterates through each attribute in the `FrameBuilder` and applies the corresponding method to modify the view's frame accordingly.
+    /// Once all attributes have been applied, the updated frame is set as the view's new frame.
     ///
-    /// - Parameter attributes: An array of `LayoutAttribute` objects.
-    public func applyAttributesToFrame(_ attributes: [LayoutAttribute]) {
+    /// - Parameter builder: The `FrameBuilder` object containing the attributes to be applied to the view's frame.
+    public func buildFrame(_ builder: FrameBuilder) {
         var frame = self.frame
         
-        for layoutAttribute in attributes {
-            switch layoutAttribute {
+        for attribute in builder.attributes {
+            switch attribute {
             case .width(let value):
                 applyWidth(value, to: &frame)
                 
@@ -75,7 +76,7 @@ extension UIView {
     
     // MARK: - Private Methods
     
-    /// Updates the width of the view's frame to the specified value.
+    /// Updates the width of the frame to the specified value.
     ///
     /// - Parameters:
     ///   - value: The new width value to set.
@@ -84,7 +85,7 @@ extension UIView {
         frame.size.width = value
     }
     
-    /// Updates the width of the view's frame to be relative to the specified leading and trailing views and their edges.
+    /// Updates the width of the frame to be relative to the specified leading and trailing views and their edges.
     ///
     /// - Parameters:
     ///   - leadingView: The leading `UIView` to calculate the width from.
@@ -94,14 +95,14 @@ extension UIView {
     ///   - trailingEdge: The edge of the trailing view to use for calculating the width.
     ///   - trailingOffset: The offset from the trailing edge of the trailing view to use for calculating the width.
     ///   - frame: The frame to update with the new width value.
-    private func applyWidthRelativeTo(leadingView: UIView, leadingEdge: LayoutXAxis, leadingOffset: CGFloat, trailingView: UIView, trailingEdge: LayoutXAxis, trailingOffset: CGFloat, to frame: inout CGRect) {
+    private func applyWidthRelativeTo(leadingView: UIView, leadingEdge: FrameXAxis, leadingOffset: CGFloat, trailingView: UIView, trailingEdge: FrameXAxis, trailingOffset: CGFloat, to frame: inout CGRect) {
         let leadingX = leadingEdge == .leading ? leadingView.frame.minX + leadingOffset : leadingView.frame.maxX + leadingOffset
         let trailingX = trailingEdge == .leading ? trailingView.frame.minX - trailingOffset : trailingView.frame.maxX - trailingOffset
         frame.size.width = trailingX - leadingX
         frame.origin.x = leadingX
     }
     
-    /// Updates the width of the view's frame to be equal to the width of the specified view.
+    /// Updates the width of the frame to be equal to the width of the specified view.
     ///
     /// - Parameters:
     ///   - view: The `UIView` whose width is to be used for updating the view's width.
@@ -114,7 +115,7 @@ extension UIView {
         }
     }
     
-    /// Updates the height of the view's frame to the specified value.
+    /// Updates the height of the frame to the specified value.
     ///
     /// - Parameters:
     ///   - value: The new height value to set.
@@ -123,7 +124,7 @@ extension UIView {
         frame.size.height = value
     }
     
-    /// Updates the height of the view's frame to be relative to the specified top and bottom views and their edges.
+    /// Updates the height of the frame to be relative to the specified top and bottom views and their edges.
     ///
     /// - Parameters:
     ///   - topView: The top `UIView` to calculate the height from.
@@ -133,14 +134,14 @@ extension UIView {
     ///   - bottomEdge: The edge of the bottom view to use for calculating the height.
     ///   - bottomOffset: The offset from the bottom edge of the bottom view to use for calculating the height.
     ///   - frame: The frame to update with the new height value.
-    private func applyHeightRelativeTo(topView: UIView, topEdge: LayoutYAxis, topOffset: CGFloat, bottomView: UIView, bottomEdge: LayoutYAxis, bottomOffset: CGFloat, to frame: inout CGRect) {
+    private func applyHeightRelativeTo(topView: UIView, topEdge: FrameYAxis, topOffset: CGFloat, bottomView: UIView, bottomEdge: FrameYAxis, bottomOffset: CGFloat, to frame: inout CGRect) {
         let topY = topEdge == .top ? topView.frame.minY + topOffset : topView.frame.maxY + topOffset
         let bottomY = bottomEdge == .top ? bottomView.frame.minY - bottomOffset : bottomView.frame.maxY - bottomOffset
         frame.size.height = bottomY - topY
         frame.origin.y = topY
     }
     
-    /// Updates the height of the view's frame to be equal to the height of the specified view.
+    /// Updates the height of the frame to be equal to the height of the specified view.
     ///
     /// - Parameters:
     ///   - view: The `UIView` whose height is to be used for updating the view's height.
@@ -153,7 +154,7 @@ extension UIView {
         }
     }
     
-    /// Updates the leading edge (minX) of the view's frame to the specified value.
+    /// Updates the leading edge of the frame to the specified value.
     ///
     /// - Parameters:
     ///   - value: The new leading edge value to set.
@@ -162,14 +163,14 @@ extension UIView {
         frame.origin.x = value
     }
     
-    /// Updates the view's leading edge to be equal to the specified edge of the specified view, with the given offset.
+    /// Updates the leading edge of the frame to be equal to the specified edge of the specified view, with the given offset.
     ///
     /// - Parameters:
     ///   - edge: The edge of the view to update to be equal to the specified view's edge.
     ///   - view: The view to calculate the edge value from.
     ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
     ///   - frame: The frame to update with the new leading edge value.
-    private func applyLeadingEqualTo(edge: LayoutXAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
+    private func applyLeadingEqualTo(edge: FrameXAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
         switch edge {
         case .leading:
             if self.isDescendant(of: view) {
@@ -186,7 +187,7 @@ extension UIView {
         }
     }
     
-    /// Updates the trailing edge (maxX) of the view's frame to the specified value.
+    /// Updates the trailing edge of the frame to the specified value.
     ///
     /// - Parameters:
     ///   - value: The new trailing edge value to set.
@@ -195,14 +196,14 @@ extension UIView {
         frame.origin.x = value - frame.size.width
     }
     
-    /// Updates the view's trailing edge to be equal to the specified edge of the specified view, with the given offset.
+    /// Updates the trailing edge of the frame to be equal to the specified edge of the specified view, with the given offset.
     ///
     /// - Parameters:
     ///   - edge: The edge of the view to update to be equal to the specified view's edge.
     ///   - view: The view to calculate the edge value from.
     ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
     ///   - frame: The frame to update with the new trailing edge value.
-    private func applyTrailingEqualTo(edge: LayoutXAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
+    private func applyTrailingEqualTo(edge: FrameXAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
         switch edge {
         case .leading:
             if self.isDescendant(of: view) {
@@ -219,7 +220,7 @@ extension UIView {
         }
     }
     
-    /// Updates the top edge (minY) of the view's frame to the specified value.
+    /// Updates the top edge of the frame to the specified value.
     ///
     /// - Parameters:
     ///   - value: The new top edge value to set.
@@ -228,14 +229,14 @@ extension UIView {
         frame.origin.y = value
     }
     
-    /// Updates the view's top edge to be equal to the specified edge of the specified view, with the given offset.
+    /// Updates the top edge of the frame to be equal to the specified edge of the specified view, with the given offset.
     ///
     /// - Parameters:
     ///   - edge: The edge of the view to update to be equal to the specified view's edge.
     ///   - view: The view to calculate the edge value from.
     ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
     ///   - frame: The frame to update with the new top edge value.
-    private func applyTopEqualTo(edge: LayoutYAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
+    private func applyTopEqualTo(edge: FrameYAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
         switch edge {
         case .top:
             if self.isDescendant(of: view) {
@@ -252,7 +253,7 @@ extension UIView {
         }
     }
     
-    /// Updates the bottom edge (maxY) of the view's frame to the specified value.
+    /// Updates the bottom edge of the frame to the specified value.
     ///
     /// - Parameters:
     ///   - value: The new bottom edge value to set.
@@ -261,14 +262,14 @@ extension UIView {
         frame.origin.y = value - frame.size.height
     }
     
-    /// Updates the view's bottom edge to be equal to the specified edge of the specified view, with the given offset.
+    /// Updates the bottom edge of the frame to be equal to the specified edge of the specified view, with the given offset.
     ///
     /// - Parameters:
     ///   - edge: The edge of the view to update to be equal to the specified view's edge.
     ///   - view: The view to calculate the edge value from.
     ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
     ///   - frame: The frame to update with the new top edge value.
-    private func applyBottomEqualTo(edge: LayoutYAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
+    private func applyBottomEqualTo(edge: FrameYAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
         switch edge {
         case .top:
             if self.isDescendant(of: view) {
