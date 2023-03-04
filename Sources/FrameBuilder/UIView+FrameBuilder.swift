@@ -9,6 +9,12 @@ import UIKit
 
 extension UIView {
     
+    // MARK: - Private Properties
+    
+    private var layoutDirection: UIUserInterfaceLayoutDirection {
+        return UIApplication.shared.userInterfaceLayoutDirection
+    }
+    
     // MARK: - Public Methods
     
     /// This function applies the attributes defined in a `FrameBuilder` object to the view's frame.
@@ -90,9 +96,54 @@ extension UIView {
     ///   - trailingOffset: The offset from the trailing edge of the trailing view to use for calculating the width.
     ///   - frame: The frame to update with the new width value.
     private func applyWidthRelativeTo(leadingView: UIView, leadingEdge: FrameXAxis, leadingOffset: CGFloat, trailingView: UIView, trailingEdge: FrameXAxis, trailingOffset: CGFloat, to frame: inout CGRect) {
-        let leadingX = leadingEdge == .leading ? leadingView.frame.minX + leadingOffset : leadingView.frame.maxX + leadingOffset
-        let trailingX = trailingEdge == .leading ? trailingView.frame.minX - trailingOffset : trailingView.frame.maxX - trailingOffset
-        frame.size.width = trailingX - leadingX
+        var leadingX:  CGFloat = 0
+        var trailingX: CGFloat = 0
+        
+        if self.isDescendant(of: leadingView) {
+            if layoutDirection == .rightToLeft {
+                leadingX = leadingEdge == .leading
+                    ? leadingView.bounds.maxX - leadingOffset
+                    : leadingView.bounds.minX - leadingOffset
+            } else {
+                leadingX = leadingEdge == .leading
+                    ? leadingView.bounds.minX + leadingOffset
+                    : leadingView.bounds.maxX + leadingOffset
+            }
+        } else {
+            if layoutDirection == .rightToLeft {
+                leadingX = leadingEdge == .leading
+                    ? leadingView.frame.maxX - leadingOffset
+                    : leadingView.frame.minX - leadingOffset
+            } else {
+                leadingX = leadingEdge == .leading
+                    ? leadingView.frame.minX + leadingOffset
+                    : leadingView.frame.maxX + leadingOffset
+            }
+        }
+        
+        if self.isDescendant(of: trailingView) {
+            if layoutDirection == .rightToLeft {
+                trailingX = trailingEdge == .leading
+                    ? trailingView.bounds.maxX + trailingOffset
+                    : trailingView.bounds.minX + trailingOffset
+            } else {
+                trailingX = trailingEdge == .leading
+                    ? trailingView.bounds.minX - trailingOffset
+                    : trailingView.bounds.maxX - trailingOffset
+            }
+        } else {
+            if layoutDirection == .rightToLeft {
+                trailingX = trailingEdge == .leading
+                    ? trailingView.frame.maxX + trailingOffset
+                    : trailingView.frame.minX + trailingOffset
+            } else {
+                trailingX = trailingEdge == .leading
+                    ? trailingView.frame.minX - trailingOffset
+                    : trailingView.frame.maxX - trailingOffset
+            }
+        }
+        
+        frame.size.width = abs(trailingX - leadingX)
     }
     
     /// Updates the width of the frame to be equal to the width of the specified view.
@@ -172,18 +223,35 @@ extension UIView {
     ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
     ///   - frame: The frame to update with the new leading edge value.
     private func applyLeadingEqualTo(edge: FrameXAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
-        switch edge {
-        case .leading:
-            if self.isDescendant(of: view) {
-                frame.origin.x = view.bounds.minX + offset
-            } else {
-                frame.origin.x = view.frame.minX + offset
+        if layoutDirection == .rightToLeft {
+            switch edge {
+            case .leading:
+                if self.isDescendant(of: view) {
+                    frame.origin.x = view.bounds.maxX - frame.size.width - offset
+                } else {
+                    frame.origin.x = view.frame.maxX - frame.size.width - offset
+                }
+            case .trailing:
+                if self.isDescendant(of: view) {
+                    frame.origin.x = view.bounds.minX - frame.size.width - offset
+                } else {
+                    frame.origin.x = view.frame.minX - frame.size.width - offset
+                }
             }
-        case .trailing:
-            if self.isDescendant(of: view) {
-                frame.origin.x = view.bounds.maxX + offset
-            } else {
-                frame.origin.x = view.frame.maxX + offset
+        } else {
+            switch edge {
+            case .leading:
+                if self.isDescendant(of: view) {
+                    frame.origin.x = view.bounds.minX + offset
+                } else {
+                    frame.origin.x = view.frame.minX + offset
+                }
+            case .trailing:
+                if self.isDescendant(of: view) {
+                    frame.origin.x = view.bounds.maxX + offset
+                } else {
+                    frame.origin.x = view.frame.maxX + offset
+                }
             }
         }
     }
@@ -196,18 +264,35 @@ extension UIView {
     ///   - offset: The offset from the specified edge of the specified view to use for calculating the edge value.
     ///   - frame: The frame to update with the new trailing edge value.
     private func applyTrailingEqualTo(edge: FrameXAxis, ofView view: UIView, offset: CGFloat, to frame: inout CGRect) {
-        switch edge {
-        case .leading:
-            if self.isDescendant(of: view) {
-                frame.origin.x = view.bounds.minX - frame.size.width - offset
-            } else {
-                frame.origin.x = view.frame.minX - frame.size.width - offset
+        if layoutDirection == .rightToLeft {
+            switch edge {
+            case .leading:
+                if self.isDescendant(of: view) {
+                    frame.origin.x = view.bounds.maxX + offset
+                } else {
+                    frame.origin.x = view.frame.maxX + offset
+                }
+            case .trailing:
+                if self.isDescendant(of: view) {
+                    frame.origin.x = view.bounds.minX + offset
+                } else {
+                    frame.origin.x = view.frame.minX + offset
+                }
             }
-        case .trailing:
-            if self.isDescendant(of: view) {
-                frame.origin.x = view.bounds.maxX - frame.size.width - offset
-            } else {
-                frame.origin.x = view.frame.maxX - frame.size.width - offset
+        } else {
+            switch edge {
+            case .leading:
+                if self.isDescendant(of: view) {
+                    frame.origin.x = view.bounds.minX - frame.size.width - offset
+                } else {
+                    frame.origin.x = view.frame.minX - frame.size.width - offset
+                }
+            case .trailing:
+                if self.isDescendant(of: view) {
+                    frame.origin.x = view.bounds.maxX - frame.size.width - offset
+                } else {
+                    frame.origin.x = view.frame.maxX - frame.size.width - offset
+                }
             }
         }
     }
