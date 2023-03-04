@@ -22,23 +22,21 @@ barView.frame = CGRect(
 You can describe the position and size of the UIView in a simple human-readable code using FrameBuilder:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .leading(12)
         .top(12)
         .width(48)
         .height(48)
-        .build()
 )
 
 let barView = UIView()
-barView.applyAttributesToFrame(
+barView.buildFrame(
     FrameBuilder()
         .leading(equalTo: .trailing, ofView: fooView, withOffset: 12)
         .top(equalTo: .top, ofView: contentView, withOffset: 16)
         .width(from: .trailing, ofView: fooView, withOffset: 12, to: .trailing, ofView: contentView, withOffset: 12)
         .height(20)
-        .build()
 )
 ```
 
@@ -81,30 +79,27 @@ There is an [Example Project](https://github.com/weakvar/FrameBuilder/tree/main/
 Sets the specific width of the view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .width(64)
-        .build()
 )
 ```
 
 Sets the width of the view relative to the leading and trailing edges of the specified views:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .width(from: .leading, ofView: barView, withOffset: 12, to: .trailing, ofView: barView, withOffset: 12)
-        .build()
 )
 ```
 
 Sets the width of the view equal to the width of another view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .width(equalTo: barView)
-        .build()
 )
 ```
 
@@ -113,30 +108,27 @@ fooView.applyAttributesToFrame(
 Sets the specific height of the view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .height(64)
-        .build()
 )
 ```
 
 Sets the height of the view relative to the specified top and bottom views and their edges:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .height(from: .top, ofView: barView, withOffset: 8, to: .bottom, ofView: barView, withOffset: 8)
-        .build()
 )
 ```
 
 Sets the height of the view equal to the height of another view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .height(equalTo: barView)
-        .build()
 )
 ```
 
@@ -145,20 +137,18 @@ fooView.applyAttributesToFrame(
 Sets the leading position of the view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .leading(12)
-        .build()
 )
 ```
 
 Sets the leading position of the view equal to the given edge of another view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .leading(equalTo: .leading, ofView: barView, withOffset: 12)
-        .build()
 )
 ```
 
@@ -167,20 +157,18 @@ fooView.applyAttributesToFrame(
 Sets the trailing position of the view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .trailing(12)
-        .build()
 )
 ```
 
 Sets the trailing position of the view equal to the given edge of another view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .trailing(equalTo: .trailing, ofView: barView, withOffset: 12)
-        .build()
 )
 ```
 
@@ -189,20 +177,18 @@ fooView.applyAttributesToFrame(
 Sets the top position of the view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .top(24)
-        .build()
 )
 ```
 
 Sets the top position of the view equal to the given edge of another view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .top(equalTo: .bottom, ofView: barView, withOffset: 8)
-        .build()
 )
 ```
 
@@ -211,20 +197,18 @@ fooView.applyAttributesToFrame(
 Sets the bottom position of the viewL:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .bottom(24)
-        .build()
 )
 ```
 
 Sets the bottom position of the view equal to the given edge of another view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .bottom(equalTo: .bottom, ofView: barView, withOffset: 8)
-        .build()
 )
 ```
 
@@ -233,20 +217,18 @@ fooView.applyAttributesToFrame(
 Sets the horizontal center of the view to the horizontal center of another view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .centerXToCenterX(ofView: barView)
-        .build()
 )
 ```
 
 Sets the vertical center of the view to the vertical center of another view:
 ```swift
 let fooView = UIView()
-fooView.applyAttributesToFrame(
+fooView.buildFrame(
     FrameBuilder()
         .centerYToCenterY(ofView: barView)
-        .build()
 )
 ```
 
