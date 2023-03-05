@@ -14,5 +14,9 @@ let package = Package(
         .target(
             name: "FrameBuilder",
             path: "Sources"),
+        .testTarget(
+            name: "FrameBuilderTests",
+            dependencies: ["FrameBuilder"],
+            path: "Tests"),
     ]
 )
