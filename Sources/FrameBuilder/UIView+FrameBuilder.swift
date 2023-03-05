@@ -99,6 +99,9 @@ extension UIView {
         var leadingX:  CGFloat = 0
         var trailingX: CGFloat = 0
         
+        // Calculate the X position from the leading UIView:
+        // 1. Check if the current UIView is a subview of `leadingView`.
+        // 2. Set the leading X position based on the layout direction.
         if self.isDescendant(of: leadingView) {
             if layoutDirection == .rightToLeft {
                 leadingX = leadingEdge == .leading
@@ -121,6 +124,9 @@ extension UIView {
             }
         }
         
+        // Calculate the X position from the trailing UIView:
+        // 1. Check if the current UIView is a subview of `trailingView`.
+        // 2. Set the trailing X position based on the layout direction.
         if self.isDescendant(of: trailingView) {
             if layoutDirection == .rightToLeft {
                 trailingX = trailingEdge == .leading
@@ -143,7 +149,9 @@ extension UIView {
             }
         }
         
-        frame.size.width = abs(trailingX - leadingX)
+        frame.size.width = layoutDirection == .rightToLeft
+            ? leadingX - trailingX
+            : trailingX - leadingX
     }
     
     /// Updates the width of the frame to be equal to the width of the specified view.
