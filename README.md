@@ -1,4 +1,4 @@
-<image width="128" height="128" src="https://raw.githubusercontent.com/weakvar/FrameBuilder/main/logo.png?token=GHSAT0AAAAAAB6AQHJVYPNEIDRXJVNX62O2Y7VH24A">
+<image width="128" height="128" src="https://github.com/weakvar/FrameBuilder/blob/feature/fix-readme/logo.png?raw=true" alt="Logo">
 
 # FrameBuilder
 
@@ -42,6 +42,14 @@ barView.buildFrame(
 
 With FrameBuilder, you can easily create complex layout structures without the need for tedious manual frame calculations. It's the perfect solution for anyone who wants to build responsive and scalable interfaces with ease.
 
+## Features
+* ✅ Frame-based
+* ✅ An easy to understand syntax inspired by AutoLayout
+* ✅ Fully supports the RTL layout direction
+* ✅ Written in pure Swift 5
+* ✅ High performance
+* ✅ No dependencies
+
 ## Install
 
 To install FrameBuilder, you can use either Swift Package Manager or CocoaPods.
@@ -71,8 +79,6 @@ Then, run pod install to install the pod.
 Once you have installed FrameBuilder, you can start using it in your project by importing the `FrameBuilder` module.
 
 ## Usage
-
-There is an [Example Project](https://github.com/weakvar/FrameBuilder/tree/main/Example/FrameBuilderExample) in the repository that demonstrates the layout of `MessengerDialogCell` on frames using FrameBuilder. If you're new to FrameBuilder, it's a great way to get started. Below are examples of using each of the methods provided by `FrameBuilder` class.
 
 ### Methods for setting a width of the view
 

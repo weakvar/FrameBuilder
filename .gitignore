@@ -37,8 +37,7 @@ Packages
 xcuserdata
 DerivedData/
 *.xcodeproj
-.swiftpm/config/registries.json
-.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.swiftpm/**/*
 .netrc
 
 
