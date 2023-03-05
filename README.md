@@ -2,9 +2,9 @@
 
 # FrameBuilder
 
-FrameBuilder is a lightweight library designed for building frame-based interfaces in a simple manner inspired by AutoLayout. It provides a fluent API for constructing layout attributes and generating a frame, which can be applied to any UIView with ease. 
+FrameBuilder is a lightweight library designed for building frame-based views on UIKit in an easy to understand syntax inspired by AutoLayout.
 
-Instead of calculating every pixel of the frame for your UIView:
+Instead of manually calculating the frame for your UIView:
 ```swift
 let fooView = UIView()
 fooView.frame = CGRect(
@@ -19,7 +19,7 @@ barView.frame = CGRect(
 )
 ```
 
-You can describe the position and size of the UIView in a simple human-readable code using FrameBuilder:
+You can describe the size and position of your UIView using an easy-to-understand syntax of FrameBuilder:
 ```swift
 let fooView = UIView()
 fooView.buildFrame(
@@ -40,7 +40,7 @@ barView.buildFrame(
 )
 ```
 
-With FrameBuilder, you can easily create complex layout structures without the need for tedious manual frame calculations. It's the perfect solution for anyone who wants to build responsive and scalable interfaces with ease.
+With FrameBuilder, you can easily create complex layout structures without the need for tedious manual frame calculations. It's the perfect solution for those who want to layout views on frames, but don't like calculating the sizes and positions of views in a manual way.
 
 ## Features
 * ✅ Frame-based
