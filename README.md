@@ -80,8 +80,6 @@ Once you have installed FrameBuilder, you can start using it in your project by 
 
 ## Usage
 
-There is an [Example Project](https://github.com/weakvar/FrameBuilder/tree/main/Example/FrameBuilderExample) in the repository that demonstrates the layout of `MessengerDialogCell` on frames using FrameBuilder. If you're new to FrameBuilder, it's a great way to get started. Below are examples of using each of the methods provided by `FrameBuilder` class.
-
 ### Methods for setting a width of the view
 
 Sets the specific width of the `fooView`:
