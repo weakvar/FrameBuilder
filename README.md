@@ -1,4 +1,4 @@
-<image width="128" height="128" src="https://github.com/weakvar/FrameBuilder/blob/feature/fix-readme/logo.png?raw=true" alt="Logo">
+<image width="128" height="128" src="https://github.com/weakvar/FrameBuilder/blob/main/logo.png?raw=true" alt="Logo">
 
 # FrameBuilder
 
