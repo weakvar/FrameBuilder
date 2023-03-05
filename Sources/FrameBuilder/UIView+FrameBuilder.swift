@@ -187,8 +187,29 @@ extension UIView {
     ///   - bottomOffset: The offset from the bottom edge of the bottom view to use for calculating the height.
     ///   - frame: The frame to update with the new height value.
     private func applyHeightRelativeTo(topView: UIView, topEdge: FrameYAxis, topOffset: CGFloat, bottomView: UIView, bottomEdge: FrameYAxis, bottomOffset: CGFloat, to frame: inout CGRect) {
-        let topY = topEdge == .top ? topView.frame.minY + topOffset : topView.frame.maxY + topOffset
-        let bottomY = bottomEdge == .top ? bottomView.frame.minY - bottomOffset : bottomView.frame.maxY - bottomOffset
+        var topY: CGFloat = 0
+        var bottomY: CGFloat = 0
+        
+        if self.isDescendant(of: topView) {
+            topY = topEdge == .top
+                ? topView.bounds.minY + topOffset
+                : topView.bounds.maxY + topOffset
+        } else {
+            topY = topEdge == .top
+                ? topView.frame.minY + topOffset
+                : topView.frame.maxY + topOffset
+        }
+        
+        if self.isDescendant(of: bottomView) {
+            bottomY = bottomEdge == .top
+                ? bottomView.bounds.minY - bottomOffset
+                : bottomView.bounds.maxY - bottomOffset
+        } else {
+            bottomY = bottomEdge == .top
+                ? bottomView.frame.minY - bottomOffset
+                : bottomView.frame.maxY - bottomOffset
+        }
+        
         frame.size.height = bottomY - topY
     }
     
