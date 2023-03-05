@@ -42,6 +42,14 @@ barView.buildFrame(
 
 With FrameBuilder, you can easily create complex layout structures without the need for tedious manual frame calculations. It's the perfect solution for anyone who wants to build responsive and scalable interfaces with ease.
 
+## Features
+* ✅ Frame-based
+* ✅ An easy to understand syntax inspired by AutoLayout
+* ✅ Fully supports the RTL layout direction
+* ✅ Written in pure Swift 5
+* ✅ High performance
+* ✅ No dependencies
+
 ## Install
 
 To install FrameBuilder, you can use either Swift Package Manager or CocoaPods.
